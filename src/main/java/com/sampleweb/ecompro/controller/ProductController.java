@@ -57,7 +57,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/products/{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable int id){
+    public ResponseEntity<Void> deleteProduct(@PathVariable int id){
         boolean pro = service.deleteProduct(id);
         if(!pro){
             return ResponseEntity.notFound().build();
