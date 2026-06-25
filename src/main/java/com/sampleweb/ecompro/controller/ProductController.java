@@ -2,6 +2,7 @@ package com.sampleweb.ecompro.controller;
 
 import com.sampleweb.ecompro.model.Product;
 import com.sampleweb.ecompro.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,13 +43,13 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ResponseEntity<Product> addProduct(@RequestBody Product newPro){
+    public ResponseEntity<Product> addProduct(@Valid@RequestBody Product newPro){
         Product pro = service.addProduct(newPro);
         return ResponseEntity.status(HttpStatus.CREATED).body(pro);
     }
 
     @PutMapping("/products/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable int id, @RequestBody Product newPro){
+    public ResponseEntity<Product> updateProduct(@PathVariable int id, @Valid @RequestBody Product newPro){
         Product pro = service.updateProduct(id, newPro);
         if(pro == null){
             return ResponseEntity.notFound().build();
