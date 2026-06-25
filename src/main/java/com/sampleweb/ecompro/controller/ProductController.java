@@ -1,6 +1,8 @@
 package com.sampleweb.ecompro.controller;
 
+import com.sampleweb.ecompro.DTO.ProductResponse;
 import com.sampleweb.ecompro.model.Product;
+import com.sampleweb.ecompro.DTO.ProductRequest;
 import com.sampleweb.ecompro.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,25 +30,25 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getAllProducts(){
-        List<Product> products = service.getALlProducts();
+    public ResponseEntity<List<ProductResponse>> getAllProducts(){
+        List<ProductResponse> products = service.getALlProducts();
         return ResponseEntity.ok(products);
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable int id){
-        Product pro = service.getProductById(id);
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable int id){
+        ProductResponse pro = service.getProductById(id);
         return ResponseEntity.ok(pro);
     }
 
     @PostMapping("/products")
-    public ResponseEntity<Product> addProduct(@Valid @RequestBody Product newPro){
+    public ResponseEntity<Product> addProduct(@Valid @RequestBody ProductRequest newPro){
         Product pro = service.addProduct(newPro);
         return ResponseEntity.status(HttpStatus.CREATED).body(pro);
     }
 
     @PutMapping("/products/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable int id, @Valid @RequestBody Product newPro){
+    public ResponseEntity<Product> updateProduct(@PathVariable int id, @Valid @RequestBody ProductRequest newPro){
         Product pro = service.updateProduct(id, newPro);
 //        if(pro == null){
 //            return ResponseEntity.notFound().build();

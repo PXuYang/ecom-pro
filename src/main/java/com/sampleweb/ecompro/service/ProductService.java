@@ -1,8 +1,10 @@
 package com.sampleweb.ecompro.service;
 
+import com.sampleweb.ecompro.DTO.ProductResponse;
 import com.sampleweb.ecompro.Exception.ProductNotFoundException;
 import com.sampleweb.ecompro.model.Product;
 import com.sampleweb.ecompro.repository.ProductRepo;
+import com.sampleweb.ecompro.DTO.ProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,19 +16,46 @@ public class ProductService {
     @Autowired
     private ProductRepo repo;
 
-    public List<Product> getALlProducts(){
-        return repo.findAll();
+    private ProductResponse toResponse(Product pro){
+        ProductResponse newPro = new ProductResponse();
+
+        newPro.setId(pro.getId());
+        newPro.setName(pro.getName());
+        newPro.setDescription(pro.getDescription());
+        newPro.setBrand(pro.getBrand());
+        newPro.setPrice(pro.getPrice());
+        newPro.setCategory(pro.getCategory());
+        newPro.setReleaseDate(pro.getReleaseDate());
+        newPro.setAvailability(pro.isAvailability());
+        newPro.setQuantity(pro.getQuantity());
+
+        return newPro;
     }
 
-    public Product getProductById(Integer id){
-        return repo.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+    public List<ProductResponse> getALlProducts(){
+        return repo.findAll().stream().map(this::toResponse).toList();
     }
 
-    public Product addProduct(Product newPro){
-        return repo.save(newPro);
+    public ProductResponse getProductById(Integer id){
+        Product pro = repo.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+        return toResponse(pro);
     }
 
-    public Product updateProduct(Integer id, Product newPro){
+    public Product addProduct(ProductRequest newPro){
+        Product product = new Product();
+        product.setName(newPro.getName());
+        product.setDescription(newPro.getDescription());
+        product.setBrand(newPro.getBrand());
+        product.setPrice(newPro.getPrice());
+        product.setCategory(newPro.getCategory());
+        product.setReleaseDate(newPro.getReleaseDate());
+        product.setAvailability(newPro.isAvailability());
+        product.setQuantity(newPro.getQuantity());
+
+        return repo.save(product);
+    }
+
+    public Product updateProduct(Integer id, ProductRequest newPro){
         Product oldPro = repo.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
 
         oldPro.setName(newPro.getName());
