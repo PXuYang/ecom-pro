@@ -1,5 +1,6 @@
 package com.sampleweb.ecompro.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,6 +35,7 @@ public class Product {
     @NotBlank(message = "Product category is required")
     private String category;
     @NotNull(message = "Product release date is required")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
     private Date releaseDate;
     private boolean availability;
     @PositiveOrZero(message = "Product quantity must be positive or zero")
