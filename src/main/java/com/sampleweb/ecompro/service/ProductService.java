@@ -18,7 +18,7 @@ public class ProductService {
     }
 
     public Product getProductById(Integer id){
-        return repo.findById(id).orElse(new Product());
+        return repo.findById(id).orElse(null);
     }
 
     public Product addProduct(Product newPro){
@@ -44,8 +44,12 @@ public class ProductService {
         return repo.save(oldPro);
     }
 
-    public void deleteProduct(int id){
+    public boolean deleteProduct(int id){
+        if(!repo.existsById(id)){
+            return false;
+        }
         repo.deleteById(id);
+        return true;
     }
 
 }

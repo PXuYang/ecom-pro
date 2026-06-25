@@ -3,6 +3,8 @@ package com.sampleweb.ecompro.controller;
 import com.sampleweb.ecompro.model.Product;
 import com.sampleweb.ecompro.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,28 +27,42 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<Product> getAllProducts(){
-        return service.getALlProducts();
+    public ResponseEntity<List<Product>> getAllProducts(){
+        List<Product> products = service.getALlProducts();
+        return ResponseEntity.ok(products);
     }
 
     @GetMapping("/products/{id}")
-    public Product getProductById(@PathVariable int id){
-        return service.getProductById(id);
+    public ResponseEntity<Product> getProductById(@PathVariable int id){
+        Product pro = service.getProductById(id);
+        if(pro == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(pro);
     }
 
     @PostMapping("/products")
-    public void addProduct(@RequestBody Product newPro){
-        service.addProduct(newPro);
+    public ResponseEntity<Product> addProduct(@RequestBody Product newPro){
+        Product pro = service.addProduct(newPro);
+        return ResponseEntity.status(HttpStatus.CREATED).body(pro);
     }
 
     @PutMapping("/products/{id}")
-    public void updateProduct(@PathVariable int id, @RequestBody Product newPro){
-        service.updateProduct(id, newPro);
+    public ResponseEntity<Product> updateProduct(@PathVariable int id, @RequestBody Product newPro){
+        Product pro = service.updateProduct(id, newPro);
+        if(pro == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(pro);
     }
 
     @DeleteMapping("/products/{id}")
-    public void deleteProduct(@PathVariable int id){
-        service.deleteProduct(id);
+    public ResponseEntity<Product> deleteProduct(@PathVariable int id){
+        boolean pro = service.deleteProduct(id);
+        if(!pro){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.noContent().build();
     }
 
 }
