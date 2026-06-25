@@ -34,7 +34,6 @@ public class Product {
     private String category;
     @NotNull
     private Date releaseDate;
-    @NotBlank
     private boolean availability;
     @PositiveOrZero
     private int quantity;
