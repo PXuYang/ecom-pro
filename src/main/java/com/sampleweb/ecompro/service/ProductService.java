@@ -17,12 +17,31 @@ public class ProductService {
         return repo.findAll();
     }
 
-    public void addProduct(Product newPro){
-        repo.save(newPro);
+    public Product getProductById(Integer id){
+        return repo.findById(id).orElse(new Product());
     }
 
-    public void updateProduct(Product newPro){
-        repo.save(newPro);
+    public Product addProduct(Product newPro){
+        return repo.save(newPro);
+    }
+
+    public Product updateProduct(Integer id, Product newPro){
+        Product oldPro = repo.findById(id).orElse(null);
+
+        if (oldPro == null) {
+            return null;
+        }
+
+        oldPro.setName(newPro.getName());
+        oldPro.setDescription(newPro.getDescription());
+        oldPro.setBrand(newPro.getBrand());
+        oldPro.setPrice(newPro.getPrice());
+        oldPro.setCategory(newPro.getCategory());
+        oldPro.setReleaseDate(newPro.getReleaseDate());
+        oldPro.setAvailability(newPro.isAvailability());
+        oldPro.setQuantity(newPro.getQuantity());
+
+        return repo.save(oldPro);
     }
 
     public void deleteProduct(int id){
