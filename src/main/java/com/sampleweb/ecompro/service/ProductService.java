@@ -41,7 +41,7 @@ public class ProductService {
         return toResponse(pro);
     }
 
-    public Product addProduct(ProductRequest newPro){
+    public ProductResponse addProduct(ProductRequest newPro){
         Product product = new Product();
         product.setName(newPro.getName());
         product.setDescription(newPro.getDescription());
@@ -52,10 +52,10 @@ public class ProductService {
         product.setAvailability(newPro.isAvailability());
         product.setQuantity(newPro.getQuantity());
 
-        return repo.save(product);
+        return toResponse(repo.save(product));
     }
 
-    public Product updateProduct(Integer id, ProductRequest newPro){
+    public ProductResponse updateProduct(Integer id, ProductRequest newPro){
         Product oldPro = repo.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
 
         oldPro.setName(newPro.getName());
@@ -67,7 +67,7 @@ public class ProductService {
         oldPro.setAvailability(newPro.isAvailability());
         oldPro.setQuantity(newPro.getQuantity());
 
-        return repo.save(oldPro);
+        return toResponse(repo.save(oldPro));
     }
 
     public boolean deleteProduct(int id){

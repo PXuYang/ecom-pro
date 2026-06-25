@@ -42,14 +42,14 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ResponseEntity<Product> addProduct(@Valid @RequestBody ProductRequest newPro){
-        Product pro = service.addProduct(newPro);
+    public ResponseEntity<ProductResponse> addProduct(@Valid @RequestBody ProductRequest newPro){
+        ProductResponse pro = service.addProduct(newPro);
         return ResponseEntity.status(HttpStatus.CREATED).body(pro);
     }
 
     @PutMapping("/products/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable int id, @Valid @RequestBody ProductRequest newPro){
-        Product pro = service.updateProduct(id, newPro);
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable int id, @Valid @RequestBody ProductRequest newPro){
+        ProductResponse pro = service.updateProduct(id, newPro);
 //        if(pro == null){
 //            return ResponseEntity.notFound().build();
 //        }
