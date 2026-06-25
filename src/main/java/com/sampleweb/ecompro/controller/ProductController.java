@@ -36,9 +36,6 @@ public class ProductController {
     @GetMapping("/products/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable int id){
         Product pro = service.getProductById(id);
-        if(pro == null){
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(pro);
     }
 
@@ -51,9 +48,9 @@ public class ProductController {
     @PutMapping("/products/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable int id, @Valid @RequestBody Product newPro){
         Product pro = service.updateProduct(id, newPro);
-        if(pro == null){
-            return ResponseEntity.notFound().build();
-        }
+//        if(pro == null){
+//            return ResponseEntity.notFound().build();
+//        }
         return ResponseEntity.ok(pro);
     }
 

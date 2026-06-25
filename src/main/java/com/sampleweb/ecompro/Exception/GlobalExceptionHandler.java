@@ -22,4 +22,12 @@ public class GlobalExceptionHandler {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<Map<String, String>> productNotFoundException(ProductNotFoundException ex){
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errors);
+    }
 }

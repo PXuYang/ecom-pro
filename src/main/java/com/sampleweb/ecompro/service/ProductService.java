@@ -1,5 +1,6 @@
 package com.sampleweb.ecompro.service;
 
+import com.sampleweb.ecompro.Exception.ProductNotFoundException;
 import com.sampleweb.ecompro.model.Product;
 import com.sampleweb.ecompro.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class ProductService {
     }
 
     public Product getProductById(Integer id){
-        return repo.findById(id).orElse(null);
+        return repo.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
     }
 
     public Product addProduct(Product newPro){
@@ -26,11 +27,7 @@ public class ProductService {
     }
 
     public Product updateProduct(Integer id, Product newPro){
-        Product oldPro = repo.findById(id).orElse(null);
-
-        if (oldPro == null) {
-            return null;
-        }
+        Product oldPro = repo.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
 
         oldPro.setName(newPro.getName());
         oldPro.setDescription(newPro.getDescription());
