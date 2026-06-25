@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,20 +23,20 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotBlank
+    @NotBlank(message = "Product name is required")
     private String name;
-    @NotBlank
+    @NotBlank(message = "Product description is required")
     private String description;
-    @NotBlank
+    @NotBlank(message = "Product brand is required")
     private String brand;
-    @PositiveOrZero
+    @Positive(message = "Product price must be positive")
     private double price;
-    @NotBlank
+    @NotBlank(message = "Product category is required")
     private String category;
-    @NotNull
+    @NotNull(message = "Product release date is required")
     private Date releaseDate;
     private boolean availability;
-    @PositiveOrZero
+    @PositiveOrZero(message = "Product quantity must be positive or zero")
     private int quantity;
 
 }
