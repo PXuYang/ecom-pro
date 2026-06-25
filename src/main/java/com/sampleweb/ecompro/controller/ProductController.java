@@ -1,7 +1,6 @@
 package com.sampleweb.ecompro.controller;
 
 import com.sampleweb.ecompro.DTO.ProductResponse;
-import com.sampleweb.ecompro.model.Product;
 import com.sampleweb.ecompro.DTO.ProductRequest;
 import com.sampleweb.ecompro.service.ProductService;
 import jakarta.validation.Valid;
