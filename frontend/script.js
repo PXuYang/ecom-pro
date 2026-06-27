@@ -1,35 +1,48 @@
-let products = [
-    {
-        name: "iPhone 17",
-        price: "$999.99",
-        brand: "Apple",
-        category: "Phone"
-    },
-    {
-        name: "Galaxy S25",
-        price: "$899.99",
-        brand: "Samsung",
-        category: "Phone"
-    }
-];
-
 function loadProduct(){
-    console.log(products);
 
-    let html = "";
+    document.getElementById("products").innerText = "Loading products...";
 
-    for(let i = 0; i < products.length; i++) {
-        let product = products[i];
+    fetch("http://localhost:8080/api/products")
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+
+        let html = "";
+
+        for (let i = 0; i < data.length; i++) {
+            let product = data[i];
 
         html += `
-        <div class="product-card">
-        <h2>${product.name}</h2>
-        <p>Price: ${product.price}</p>
-        <p>Brand: ${product.brand}</p>
-        <p>Category: ${product.category}</p>
-        </div>
-        `;
+            <div class="product-card">
+            <h2>${product.name}</h2>
+            <p>Description: ${product.description}</p>
+            <p>Price: $${product.price}</p>
+            <p>Brand: ${product.brand}</p>
+            <p>Category: ${product.category}</p>
+            <button onclick="deleteProduct(${product.id})">Delete</button>
+            </div>
+            `;
     }
+        document.getElementById("products").innerHTML = html;
+    }
+    )
+        .catch(error => {
+                console.log(error);
+                document.getElementById("products").innerText = "Failed to load products...";
+            }
+        );
+}
 
-    document.getElementById("products").innerHTML = html;
+function deleteProduct(id){
+
+    fetch("http://localhost:8080/api/products/" + id, {
+        method: "DELETE",
+    })
+    .then(() => loadProduct())
+    .catch(error => {
+        console.log(error)
+        alert("Failed to delete product!");
+    }
+    );
+
 }
