@@ -35,6 +35,12 @@ function loadProduct(){
 
 function deleteProduct(id){
 
+    let confirmDelete = confirm("Are you sure you want to delete this product?");
+
+    if (!confirmDelete) {
+        return;
+    }
+
     fetch("http://localhost:8080/api/products/" + id, {
         method: "DELETE",
     })
