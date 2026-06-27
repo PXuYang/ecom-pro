@@ -71,7 +71,7 @@ function addProduct(){
 
     let datePatten = /^\d{4}-\d{2}-\d{2}$/;
     if(!datePatten.test(releaseDate)){
-        alert("Invalid date! Must be yyyy-mm-dd format!");
+        alert("Invalid date! Must be yyyy-MM-dd format!");
         return;
     }
 
