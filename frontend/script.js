@@ -61,18 +61,39 @@ function addProduct(){
     let price = document.getElementById("priceInput").value;
     let category = document.getElementById("categoryInput").value;
     let releaseDate = document.getElementById("releaseDateInput").value;
-    let availability = document.getElementById("availabilityInput").value;
+    let availability = document.getElementById("availabilityInput").value.toLowerCase();
     let quantity = document.getElementById("quantityInput").value;
+
+    if(price === "" || isNaN(Number(price))){
+        alert("Price must be number!");
+        return;
+    }
+
+    let datePatten = /^\d{4}-\d{2}-\d{2}$/;
+    if(!datePatten.test(releaseDate)){
+        alert("Invalid date! Must be yyyy-mm-dd format!");
+        return;
+    }
+
+    if(availability !== "true" && availability !== "false"){
+        alert("Availability must be true or false!");
+        return;
+    }
+
+    if(quantity === "" || isNaN(Number(quantity))){
+        alert("Quantity must be number!");
+        return;
+    }
 
     let product = {
         name: name,
         description: desc,
         brand: brand,
-        price: price,
+        price: Number(price),
         category: category,
         releaseDate: releaseDate,
-        availability: availability,
-        quantity: quantity,
+        availability: availability === "true",
+        quantity: Number(quantity),
     };
 
     console.log(product);
