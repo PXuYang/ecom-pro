@@ -52,3 +52,50 @@ function deleteProduct(id){
     );
 
 }
+
+function addProduct(){
+
+    let name = document.getElementById("nameInput").value;
+    let desc = document.getElementById("descInput").value;
+    let brand = document.getElementById("brandInput").value;
+    let price = document.getElementById("priceInput").value;
+    let category = document.getElementById("categoryInput").value;
+    let releaseDate = document.getElementById("releaseDateInput").value;
+    let availability = document.getElementById("availabilityInput").value;
+    let quantity = document.getElementById("quantityInput").value;
+
+    let product = {
+        name: name,
+        description: desc,
+        brand: brand,
+        price: price,
+        category: category,
+        releaseDate: releaseDate,
+        availability: availability,
+        quantity: quantity,
+    };
+
+    console.log(product);
+
+    fetch("http://localhost:8080/api/products", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(product),
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json()
+                    .then(errorData => {
+                        alert(errorData.message + " Please check your input!");
+                    })
+            }
+            loadProduct();
+        })
+        .catch(error => {
+            console.log(error);
+            alert("Failed to create product!");
+        })
+
+}

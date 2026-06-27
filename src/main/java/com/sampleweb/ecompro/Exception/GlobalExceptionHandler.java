@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, String>> bodyMissingException(HttpMessageNotReadableException ex){
         Map<String, String> errors = new HashMap<>();
-        errors.put("message", "Body is missing");
+        errors.put("message", "Wrong data type or Body is missing!");
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
