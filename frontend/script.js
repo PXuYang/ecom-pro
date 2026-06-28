@@ -22,6 +22,9 @@ function loadProduct(){
             <p>Price: $${product.price}</p>
             <p>Brand: ${product.brand}</p>
             <p>Category: ${product.category}</p>
+            <p>Release Date: ${product.releaseDate}</p>
+            <p>Quantity: ${product.quantity}</p>
+            <p>Available: ${product.availability}</p>
             <button onclick="updateProduct(${product.id})">Update</button>
             <button onclick="deleteProduct(${product.id})">Delete</button>
             </div>
@@ -151,7 +154,7 @@ function updateProduct(id){
         }
     }
 
-    console.log("Selected product: " + product);
+    console.log("Selected product: ", product);
 
     let popup = document.createElement("div");
     popup.innerHTML = `
@@ -240,7 +243,7 @@ function updateProduct(id){
             quantity: Number(quantity),
         };
 
-        console.log("Updated product: " + product);
+        console.log("Updated product: ", product);
 
         fetch("http://localhost:8080/api/products/" + id, {
             method: "PUT",
