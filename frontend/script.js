@@ -151,7 +151,7 @@ function updateProduct(id){
         }
     }
 
-    console.log(product);
+    console.log("Selected product: " + product);
 
     let popup = document.createElement("div");
     popup.innerHTML = `
@@ -239,6 +239,8 @@ function updateProduct(id){
             availability: availability === "true",
             quantity: Number(quantity),
         };
+
+        console.log("Updated product: " + product);
 
         fetch("http://localhost:8080/api/products/" + id, {
             method: "PUT",
