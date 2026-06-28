@@ -69,8 +69,7 @@ function addProduct(){
     let quantity = document.getElementById("quantityInput").value;
 
     if(name === "" || desc === "" || brand === ""
-        || price === "" || category === "" || releaseDate === ""
-        || availability === "" || quantity === ""){
+        || category === ""){
         alert("Please enter a valid product!");
         return;
     }
@@ -80,8 +79,8 @@ function addProduct(){
         return;
     }
 
-    let datePatten = /^\d{4}-\d{2}-\d{2}$/;
-    if(!datePatten.test(releaseDate)){
+    let datePattern = /^\d{4}-\d{2}-\d{2}$/;
+    if(!datePattern.test(releaseDate)){
         alert("Invalid date! Must be yyyy-MM-dd format!");
         return;
     }
@@ -204,8 +203,7 @@ function updateProduct(id){
         let quantity = document.getElementById("updateQuantityInput").value;
 
         if(name === "" || desc === "" || brand === ""
-            || price === "" || category === "" || releaseDate === ""
-            || availability === "" || quantity === ""){
+            || category === ""){
             alert("Please enter a valid product!");
             return;
         }
@@ -215,8 +213,8 @@ function updateProduct(id){
             return;
         }
 
-        let datePatten = /^\d{4}-\d{2}-\d{2}$/;
-        if(!datePatten.test(releaseDate)){
+        let datePattern = /^\d{4}-\d{2}-\d{2}$/;
+        if(!datePattern.test(releaseDate)){
             alert("Invalid date! Must be yyyy-MM-dd format!");
             return;
         }
