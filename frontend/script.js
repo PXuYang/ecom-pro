@@ -203,6 +203,13 @@ function updateProduct(id){
         let availability = document.getElementById("updateAvailabilityInput").value;
         let quantity = document.getElementById("updateQuantityInput").value;
 
+        if(name === "" || desc === "" || brand === ""
+            || price === "" || category === "" || releaseDate === ""
+            || availability === "" || quantity === ""){
+            alert("Please enter a valid product!");
+            return;
+        }
+
         if(price === "" || isNaN(Number(price))){
             alert("Price must be number!");
             return;
