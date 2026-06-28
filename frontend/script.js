@@ -153,7 +153,6 @@ function updateProduct(id){
     }
 
     console.log(product);
-    alert("Selected product: " + product.name);
 
     let popup = document.createElement("div");
     popup.innerHTML = `
@@ -189,6 +188,7 @@ function updateProduct(id){
         `;
 
     document.body.appendChild(popup);
+    document.getElementById("updateAvailabilityInput").value = String(product.availability);
     document.getElementById("cancelUpdate").onclick = function () {
         popup.remove();
     };
