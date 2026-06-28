@@ -250,15 +250,6 @@ function updateProduct(id){
                         })
                 }
 
-                document.getElementById("nameInput").value = "";
-                document.getElementById("descInput").value = "";
-                document.getElementById("brandInput").value = "";
-                document.getElementById("priceInput").value = "";
-                document.getElementById("categoryInput").value = "";
-                document.getElementById("releaseDateInput").value = "";
-                document.getElementById("availabilityInput").value = "";
-                document.getElementById("quantityInput").value = "";
-
                 loadProduct();
                 popup.remove();
             })
