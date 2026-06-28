@@ -5,6 +5,69 @@
     <title>Ecom Products</title>
 
     <style>
+        .headerBox{
+            margin-bottom: 20px;
+        }
+
+        body{
+            text-align: center;
+            margin: 20px;
+            background-color: #f8f8f8;
+        }
+
+        input, select{
+            margin-bottom: 10px;
+        }
+
+        button{
+            margin-top: 5px;
+            margin-right: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            border: 1px solid grey;
+            background-color: beige;
+        }
+
+        .addBox{
+            text-align: left;
+            margin-top: 20px;
+            margin-right: auto;
+            margin-left: auto;
+            border: 1px solid silver;
+            border-radius: 10px;
+            width: 300px;
+            padding: 10px;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .addBox:hover{
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .addBox input,
+        .addBox select{
+            width: 100%;
+            box-sizing: border-box;
+            padding: 5px;
+        }
+
+        .addBox h2{
+            margin-top: 0;
+            text-align: center;
+        }
+
+        #products{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
         .product-card{
             border: 1px solid silver;
             border-radius: 10px;
@@ -13,43 +76,48 @@
             padding: 10px;
             margin-bottom: 20px;
             width: 200px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        #products{
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 100px;
+        .product-card:hover{
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
+
     </style>
 
 </head>
 <body>
-    <h1>Product List</h1>
-    <button onclick="loadProduct()">Load Product</button>
+    <div class="headerBox">
+        <h1>Product List</h1>
+        <button onclick="loadProduct()">Load Product</button>
+    </div>
 
-    <h2>Add Product</h2>
-    <label for="nameInput">Name: </label>
-    <input id="nameInput" placeholder="Name"><br>
-    <label for="descInput">Description: </label>
-    <input id="descInput" placeholder="Description"><br>
-    <label for="brandInput">Brand: </label>
-    <input id="brandInput" placeholder="Brand"><br>
-    <label for="priceInput">Price: </label>
-    <input id="priceInput" type="number" placeholder="Price"><br>
-    <label for="categoryInput">Category: </label>
-    <input id="categoryInput" placeholder="Category"><br>
-    <label for="releaseDateInput">Release Date:</label>
-    <input id="releaseDateInput" type="date"><br>
-    <label for="quantityInput">Quantity: </label>
-    <input id="quantityInput" type="number" placeholder="Quantity"><br>
-    <label for="availabilityInput">Availability: </label>
-    <select id="availabilityInput">
-        <option value="">Select Availability</option>
-        <option value="true">Available</option>
-        <option value="false">Not available</option>
-    </select><br>
-    <button onclick="addProduct()">Add Product</button>
+    <div class="addBox">
+        <h2>Add Product</h2>
+            <label for="nameInput">Name: </label>
+            <input id="nameInput" placeholder="Name"><br>
+            <label for="descInput">Description: </label>
+            <input id="descInput" placeholder="Description"><br>
+            <label for="brandInput">Brand: </label>
+            <input id="brandInput" placeholder="Brand"><br>
+            <label for="priceInput">Price: </label>
+            <input id="priceInput" type="number" placeholder="Price"><br>
+            <label for="categoryInput">Category: </label>
+            <input id="categoryInput" placeholder="Category"><br>
+            <label for="releaseDateInput">Release Date:</label>
+            <input id="releaseDateInput" type="date"><br>
+            <label for="quantityInput">Quantity: </label>
+            <input id="quantityInput" type="number" placeholder="Quantity"><br>
+            <label for="availabilityInput">Availability: </label>
+            <select id="availabilityInput">
+                <option value="">Select Availability</option>
+                <option value="true">Available</option>
+                <option value="false">Not available</option>
+            </select><br>
+            <button onclick="addProduct()">Add Product</button>
+    </div>
     <div id="products"></div>
 
     <script src="script.js"></script>

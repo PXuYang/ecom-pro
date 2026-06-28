@@ -24,7 +24,7 @@ function loadProduct(){
             <p>Category: ${product.category}</p>
             <p>Release Date: ${product.releaseDate}</p>
             <p>Quantity: ${product.quantity}</p>
-            <p>Available: ${product.availability}</p>
+            <p>Available: ${product.availability? "Yes" : "No"}</p>
             <button onclick="updateProduct(${product.id})">Update</button>
             <button onclick="deleteProduct(${product.id})">Delete</button>
             </div>
