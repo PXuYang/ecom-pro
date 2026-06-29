@@ -45,6 +45,7 @@
         }
 
         .dropdown-content a{
+            width: 200px;
             display: block;
             padding: 12px;
             text-decoration: none;
@@ -99,29 +100,24 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
-        .headerBox{
-            margin-bottom: 20px;
+        .productBox{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
         }
 
-        body{
-            text-align: center;
-            margin: 20px;
-            background-color: #f8f8f8;
+        .productList{
+            margin: 0;
         }
 
-        .popupFormRow{
-            margin-bottom: 10px;
-            text-align: left;
-        }
-
-        button{
-            margin-top: 5px;
-            margin-right: 5px;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 8px;
-            border: 1px solid grey;
-            background-color: beige;
+        .filter, .sort{
+            font-size: 18px;
+            font-weight: bold;
+            padding: 6px 14px;
+            margin-top: 0;
+            border-radius: 50px;
+            background-color: white;
         }
 
         #products{
@@ -147,6 +143,27 @@
         .product-card:hover{
             transform: translateY(-3px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        body{
+            text-align: center;
+            margin: 20px;
+            background-color: #f8f8f8;
+        }
+
+        .popupFormRow{
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        button{
+            margin-top: 5px;
+            margin-right: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            border: 1px solid grey;
+            background-color: beige;
         }
 
     </style>
@@ -190,8 +207,30 @@
             </div>
         </div>
     </div>
-    <div class="headerBox">
-        <h1 id="productSection">Product List</h1>
+    <div class="productBox">
+        <h1 id="productSection" class="productList">Product List</h1>
+        <div class="dropdown">
+            <button class="filter"> ☰ filter</button>
+
+            <div class="dropdown-content">
+                <a>Search by name</a>
+                <a>Filter by category</a>
+                <a>Filter by availability</a>
+                <a>Filter by brand</a>
+                <a>Low stock</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="sort"> ☰ sort</button>
+
+            <div class="dropdown-content">
+                <a>Sort by name(a-z)</a>
+                <a>Sort by price(low to high)</a>
+                <a>Sort by price(high to low)</a>
+                <a>Sort by stock(low to high)</a>
+                <a>Sort by stock(high to low)</a>
+            </div>
+        </div>
     </div>
 
     <div id="products"></div>
