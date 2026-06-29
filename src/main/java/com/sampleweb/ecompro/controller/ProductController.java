@@ -2,7 +2,9 @@ package com.sampleweb.ecompro.controller;
 
 import com.sampleweb.ecompro.DTO.ProductResponse;
 import com.sampleweb.ecompro.DTO.ProductRequest;
+import com.sampleweb.ecompro.DTO.ProductStatResponse;
 import com.sampleweb.ecompro.service.ProductService;
+import jakarta.validation.Path;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,6 +65,30 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/products/stat")
+    public ResponseEntity<ProductStatResponse> getProductsStat(){
+        ProductStatResponse productStatResponse = service.getStatData();
+        return ResponseEntity.ok(productStatResponse);
+    }
+
+    @GetMapping("/products/low-stock")
+    public ResponseEntity<List<ProductResponse>> getLowStock(){
+        List<ProductResponse> lowStock = service.findByQuantityLessThan();
+        return ResponseEntity.ok(lowStock);
+    }
+
+    @GetMapping("/products/category/{category}")
+    public ResponseEntity<List<ProductResponse>> findByCategory(@PathVariable String category){
+        List<ProductResponse> byCategory = service.findByCategory(category);
+        return ResponseEntity.ok(byCategory);
+    }
+
+    @GetMapping("/products/byname/{keyword}")
+    public ResponseEntity<List<ProductResponse>> findByNameContainingIgnoreCase(@PathVariable String keyword){
+        List<ProductResponse> byName = service.findByNameContainingIgnoreCase(keyword);
+        return ResponseEntity.ok(byName);
     }
 
 }

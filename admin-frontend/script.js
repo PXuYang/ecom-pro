@@ -1,5 +1,29 @@
 let currentProducts = [];
-let lowStock = [];
+
+function displayProducts(products) {
+
+    let html = "";
+
+    for (let i = 0; i < products.length; i++) {
+        let product = products[i];
+
+        html += `
+                <div class="product-card">
+                    <h2>${product.name}</h2>
+                    <p>Description: ${product.description}</p>
+                    <p>Price: $${product.price}</p>
+                    <p>Brand: ${product.brand}</p>
+                    <p>Category: ${product.category}</p>
+                    <p>Release Date: ${product.releaseDate}</p>
+                    <p>Quantity: ${product.quantity}</p>
+                    <p>Available: ${product.availability? "Yes" : "No"}</p>
+                    <button onclick="updateProduct(${product.id})">Update</button>
+                    <button onclick="deleteProduct(${product.id})">Delete</button>
+                </div>
+            `;
+    }
+    document.getElementById("products").innerHTML = html;
+}
 
 function loadProduct(){
 
@@ -8,53 +32,30 @@ function loadProduct(){
     fetch("http://localhost:8080/api/products")
     .then(response => response.json())
     .then(products => {
-        document.getElementById("totalProCount").innerText = products.length;
-
-        let lowStockCount = 0;
-
-        let categories = [];
-        lowStock = [];
 
         currentProducts = products;
         console.log("Loaded products", products);
 
-        let html = "";
-
-        for (let i = 0; i < products.length; i++) {
-            let product = products[i];
-            if(product.quantity < 10){
-                lowStockCount++;
-                lowStock.push(product);
-            }
-            if(!categories.includes(product.category)){
-                categories.push(product.category);
-            }
-
-        html += `
-            <div class="product-card">
-            <h2>${product.name}</h2>
-            <p>Description: ${product.description}</p>
-            <p>Price: $${product.price}</p>
-            <p>Brand: ${product.brand}</p>
-            <p>Category: ${product.category}</p>
-            <p>Release Date: ${product.releaseDate}</p>
-            <p>Quantity: ${product.quantity}</p>
-            <p>Available: ${product.availability? "Yes" : "No"}</p>
-            <button onclick="updateProduct(${product.id})">Update</button>
-            <button onclick="deleteProduct(${product.id})">Delete</button>
-            </div>
-            `;
-    }
-        document.getElementById("products").innerHTML = html;
-        document.getElementById("lowStockCount").innerText = lowStockCount;
-        document.getElementById("categoryCount").innerText = categories.length;
-    }
-    )
+        displayProducts(products);
+    })
         .catch(error => {
-                console.log(error);
-                document.getElementById("products").innerText = "Failed to load products...";
-            }
-        );
+            console.log(error);
+            document.getElementById("products").innerText = "Failed to load products...";
+        });
+}
+
+function showProductStat(){
+
+    fetch("http://localhost:8080/api/products/stat")
+    .then(response => response.json())
+    .then(stats => {
+        document.getElementById("totalProCount").innerText = stats.totalProductCount;
+        document.getElementById("lowStockCount").innerText = stats.lowStockCount;
+        document.getElementById("categoryCount").innerText = stats.categoryCount;
+    })
+    .catch(error => {
+        console.log(error);
+    });
 }
 
 function deleteProduct(id){
@@ -68,7 +69,9 @@ function deleteProduct(id){
     fetch("http://localhost:8080/api/products/" + id, {
         method: "DELETE",
     })
-    .then(() => loadProduct())
+    .then(() => {
+        refreshPage();
+    })
     .catch(error => {
         console.log(error)
         alert("Failed to delete product!");
@@ -81,10 +84,8 @@ function addProduct(){
 
     let popup = document.createElement("div");
     popup.innerHTML = `
-        <div style="position: fixed; top: 0; left: 0; width: 100%; 
-        height: 100%; background: rgba(0, 0, 0, 0.4); 
-        display: flex; align-items: center; justify-content: center">
-            <div style="background-color: white; padding: 20px; border-radius: 10px; width: 250px">
+        <div class="popupOverlay">
+            <div class="popupWindow">
                 <h2>Add Product</h2>
                 <div class="popupFormRow">
                     <label for="nameInput">Name: </label>
@@ -199,7 +200,7 @@ function addProduct(){
                         })
                 }
 
-                loadProduct();
+                refreshPage();
                 popup.remove();
             })
             .catch(error => {
@@ -224,10 +225,8 @@ function updateProduct(id){
 
     let popup = document.createElement("div");
     popup.innerHTML = `
-        <div style="position: fixed; top: 0; left: 0; width: 100%; 
-        height: 100%; background: rgba(0, 0, 0, 0.4); 
-        display: flex; align-items: center; justify-content: center">
-            <div style="background-color: white; padding: 20px; border-radius: 10px; width: 250px">
+        <div class="popupOverlay">
+            <div class="popupWindow">
                 <h2>Update Product</h2>
                     <div class="popupFormRow">
                         <label for="updateNameInput">Name: </label>
@@ -344,7 +343,7 @@ function updateProduct(id){
                         })
                 }
 
-                loadProduct();
+                refreshPage();
                 popup.remove();
             })
             .catch(error => {
@@ -359,37 +358,120 @@ function showLowStockDetails() {
 
     let lowStockDetails = "";
 
-    if(lowStock.length === 0){
-        lowStockDetails = "<p>There is no low stock product!</p>";
-    } else {
-        for (let i = 0; i < lowStock.length; i++) {
-            let product = lowStock[i];
+    fetch("http://localhost:8080/api/products/low-stock")
+    .then(response => response.json())
+        .then(lowStock => {
 
-            lowStockDetails += `
-            <p>Product Name: ${product.name}</p>
-            <p>Stock: ${product.quantity}</p>
-            <hr>
+            if(lowStock.length === 0){
+                lowStockDetails = "<p>There is no low stock product!</p>";
+            } else {
+                for (let i = 0; i < lowStock.length; i++) {
+                    let product = lowStock[i];
+
+                    lowStockDetails += `
+                    <p>Product Name: ${product.name}</p>
+                    <p>Stock: ${product.quantity}</p>
+                    <hr>
+                `;
+                }
+            }
+
+            let popup = document.createElement("div");
+            popup.innerHTML = `
+                <div class="popupOverlay">
+                    <div class="popupWindow">
+                        <h2>Low Stock</h2>
+                        ${lowStockDetails}
+                        <button id="cancelPopup">Close</button>
+                    </div>    
+                </div>
             `;
-        }
-    }
+            document.body.appendChild(popup);
+            document.getElementById("cancelPopup").onclick = function () {
+                popup.remove();
+            };
+        })
+        .catch(error => {
+        console.log(error);
+        alert("Failed to load low stock products!");
+        })
+}
 
+function findByCategory(category) {
+
+    fetch("http://localhost:8080/api/products/category/" + category, {
+        method: "GET",
+    })
+    .then(response => response.json())
+    .then(byCategory => {
+
+            console.log("Loaded products", byCategory);
+
+            displayProducts(byCategory);
+
+        })
+        .catch(error => {
+            console.log(error);
+            document.getElementById("products").innerText = "Failed to load products...";
+        });
+}
+
+function findByName(keyword) {
+    fetch("http://localhost:8080/api/products/byname/" + keyword, {
+        method: "GET",
+    })
+        .then(response => response.json())
+        .then(byName => {
+
+            console.log("Loaded products", byName);
+
+            displayProducts(byName);
+        })
+        .catch(error => {
+            console.log(error);
+            document.getElementById("products").innerText = "Failed to load products...";
+        });
+}
+
+function searchBox(type){
     let popup = document.createElement("div");
     popup.innerHTML = `
-        <div style="position: fixed; top: 0; left: 0; width: 100%; 
-        height: 100%; background: rgba(0, 0, 0, 0.4); 
-        display: flex; align-items: center; justify-content: center">
-            <div style="background-color: white; padding: 20px; border-radius: 10px; width: 250px">
-                <h2>Low Stock</h2>
-                ${lowStockDetails}
-                <button id="cancelPopup">Close</button>
-            </div>    
+        <div class="popupOverlay">
+            <div class="popupWindow">
+                <div class="popupFormRow">
+                    <input id="searchInput" type="text" placeholder="Search Products" />
+                </div>
+                <div>
+                    <button id="searchButton"">Search</button>
+                    <button id="cancelPopup">Cancel</button>
+                </div>
+            </div>
         </div>
     `;
-
     document.body.appendChild(popup);
+    document.getElementById("searchButton").onclick = function () {
+        let input = document.getElementById("searchInput").value;
+        if(input === ""){
+            alert("Please enter a valid category!");
+            return;
+        }
+        if(type === "name"){
+            findByName(input);
+        }
+        if(type === "category") {
+            findByCategory(input);
+        }
+        popup.remove();
+    }
+
     document.getElementById("cancelPopup").onclick = function () {
         popup.remove();
     };
 }
 
-loadProduct();
+function refreshPage(){
+    loadProduct();
+    showProductStat();
+}
+
+refreshPage();
