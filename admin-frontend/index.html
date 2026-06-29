@@ -2,9 +2,96 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ecom Products</title>
+    <title>Product Management Dashboard</title>
 
     <style>
+        .navBar{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .navBar-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .dropdown{
+            display: inline-block;
+            position: relative;
+        }
+
+        .dropdown-content{
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .dropdown-content a{
+            display: block;
+            padding: 12px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .dropdown:hover .dropdown-content{
+            display: block;
+        }
+
+        .dropdown-content a:hover{
+            background-color: grey;
+        }
+
+        .introBox{
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .dashboardBox{
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .statsRow{
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .statCard{
+            cursor: pointer;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 180px;
+            border: 1px solid silver;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .statCard:hover{
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
         .headerBox{
             margin-bottom: 20px;
         }
@@ -30,13 +117,13 @@
         }
 
         .addBox{
-            text-align: left;
+            text-align: center;
             margin-top: 20px;
             margin-right: auto;
             margin-left: auto;
             border: 1px solid silver;
             border-radius: 10px;
-            width: 300px;
+            width: 80%;
             padding: 10px;
             background-color: white;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -50,7 +137,7 @@
 
         .addBox input,
         .addBox select{
-            width: 100%;
+            width: 300px;
             box-sizing: border-box;
             padding: 5px;
         }
@@ -89,12 +176,50 @@
 
 </head>
 <body>
+<div class="navBar">
+    <div class="navBar-title">Ecom Admin</div>
+    <div class="dropdown">
+        <button>menu</button>
+
+        <div class="dropdown-content">
+            <a href="#intro">Website Intro</a>
+            <a href="#dashboard">Dashboard</a>
+            <a href="#productSection">Product List</a>
+            <a href="#addProduct">Add Product</a>
+        </div>
+    </div>
+</div>
+    <div id="intro" class="introBox">
+        <h1>Website Introduction</h1>
+        <p>Ecom Admin helps company staff manage product information, inventory, prices, and availability in one dashboard.</p>
+    </div>
+    <div id="dashboard" class="dashboardBox">
+        <h2>Dashboard</h2>
+
+        <div class="statsRow">
+            <div class="statCard" onclick="loadProduct()">
+                <h3>Total Product</h3>
+                <p id="totalProCount">0</p>
+            </div>
+
+            <div class="statCard" onclick="showLowStockDetails()">
+                <h3>Low Stock</h3>
+                <p id="lowStockCount">0</p>
+            </div>
+
+            <div class="statCard">
+                <h3>Categories</h3>
+                <p id="categoryCount">0</p>
+            </div>
+        </div>
+    </div>
     <div class="headerBox">
-        <h1>Product List</h1>
-        <button onclick="loadProduct()">Load Product</button>
+        <h1 id="productSection">Product List</h1>
     </div>
 
-    <div class="addBox">
+    <div id="products"></div>
+
+    <div id="addProduct" class="addBox">
         <h2>Add Product</h2>
             <label for="nameInput">Name: </label>
             <input id="nameInput" placeholder="Name"><br>
@@ -118,7 +243,6 @@
             </select><br>
             <button onclick="addProduct()">Add Product</button>
     </div>
-    <div id="products"></div>
 
     <script src="script.js"></script>
 

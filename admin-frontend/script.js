@@ -1,4 +1,5 @@
 let currentProducts = [];
+let lowStock = [];
 
 function loadProduct(){
 
@@ -7,13 +8,27 @@ function loadProduct(){
     fetch("http://localhost:8080/api/products")
     .then(response => response.json())
     .then(products => {
+        document.getElementById("totalProCount").innerText = products.length;
+
+        let lowStockCount = 0;
+
+        let categories = [];
+        lowStock = [];
+
         currentProducts = products;
-        console.log(products);
+        console.log("Loaded products", products);
 
         let html = "";
 
         for (let i = 0; i < products.length; i++) {
             let product = products[i];
+            if(product.quantity < 10){
+                lowStockCount++;
+                lowStock.push(product);
+            }
+            if(!categories.includes(product.category)){
+                categories.push(product.category);
+            }
 
         html += `
             <div class="product-card">
@@ -31,6 +46,8 @@ function loadProduct(){
             `;
     }
         document.getElementById("products").innerHTML = html;
+        document.getElementById("lowStockCount").innerText = lowStockCount;
+        document.getElementById("categoryCount").innerText = categories.length;
     }
     )
         .catch(error => {
@@ -270,3 +287,42 @@ function updateProduct(id){
     };
 
 }
+
+function showLowStockDetails() {
+
+    let lowStockDetails = "";
+
+    if(lowStock.length === 0){
+        lowStockDetails = "<p>There is no low stock product!</p>";
+    } else {
+        for (let i = 0; i < lowStock.length; i++) {
+            let product = lowStock[i];
+
+            lowStockDetails += `
+            <p>Product Name: ${product.name}</p>
+            <p>Stock: ${product.quantity}</p>
+            <hr>
+            `;
+        }
+    }
+
+    let popup = document.createElement("div");
+    popup.innerHTML = `
+        <div style="position: fixed; top: 0; left: 0; width: 100%; 
+        height: 100%; background: rgba(0, 0, 0, 0.4); 
+        display: flex; align-items: center; justify-content: center">
+            <div style="background-color: white; padding: 20px; border-radius: 10px">
+                <h2>Low Stock</h2>
+                ${lowStockDetails}
+                <button id="cancelPopup">Close</button>
+            </div>    
+        </div>
+    `;
+
+    document.body.appendChild(popup);
+    document.getElementById("cancelPopup").onclick = function () {
+        popup.remove();
+    };
+}
+
+loadProduct();
