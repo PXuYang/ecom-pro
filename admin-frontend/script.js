@@ -84,30 +84,48 @@ function addProduct(){
         <div style="position: fixed; top: 0; left: 0; width: 100%; 
         height: 100%; background: rgba(0, 0, 0, 0.4); 
         display: flex; align-items: center; justify-content: center">
-            <div style="background-color: white; padding: 20px; border-radius: 10px">
+            <div style="background-color: white; padding: 20px; border-radius: 10px; width: 250px">
                 <h2>Add Product</h2>
-                <label for="nameInput">Name: </label>
-                <input id="nameInput" placeholder="Name"><br>
-                <label for="descInput">Description: </label>
-                <input id="descInput" placeholder="Description"><br>
-                <label for="brandInput">Brand: </label>
-                <input id="brandInput" placeholder="Brand"><br>
-                <label for="priceInput">Price: </label>
-                <input id="priceInput" type="number" placeholder="Price"><br>
-                <label for="categoryInput">Category: </label>
-                <input id="categoryInput" placeholder="Category"><br>
-                <label for="releaseDateInput">Release Date:</label>
-                <input id="releaseDateInput" type="date"><br>
-                <label for="quantityInput">Quantity: </label>
-                <input id="quantityInput" type="number" placeholder="Quantity"><br>
-                <label for="availabilityInput">Availability: </label>
-                <select id="availabilityInput">
-                    <option value="">Select Availability</option>
-                    <option value="true">Available</option>
-                    <option value="false">Not available</option>
-                </select><br>
-                <button id="confirmAdding">Add Product</button>
-                <button id="cancelAdding">Cancel</button>
+                <div class="popupFormRow">
+                    <label for="nameInput">Name: </label>
+                    <input id="nameInput" placeholder="Name">
+                </div>
+                <div class="popupFormRow">
+                    <label for="descInput">Description: </label>
+                    <input id="descInput" placeholder="Description">
+                </div>
+                <div class="popupFormRow">
+                    <label for="brandInput">Brand: </label>
+                    <input id="brandInput" placeholder="Brand">
+                </div>
+                <div class="popupFormRow">
+                    <label for="priceInput">Price: </label>
+                    <input id="priceInput" type="number" placeholder="Price">
+                </div>
+                <div class="popupFormRow">
+                    <label for="categoryInput">Category: </label>
+                    <input id="categoryInput" placeholder="Category">
+                </div>
+                <div class="popupFormRow">
+                    <label for="releaseDateInput">Release Date:</label>
+                    <input id="releaseDateInput" type="date">
+                </div>
+                <div class="popupFormRow">
+                    <label for="quantityInput">Quantity: </label>
+                    <input id="quantityInput" type="number" placeholder="Quantity">
+                </div>
+                <div class="popupFormRow">
+                    <label for="availabilityInput">Availability: </label>
+                    <select id="availabilityInput">
+                        <option value="">Select Availability</option>
+                        <option value="true">Available</option>
+                        <option value="false">Not available</option>
+                    </select>
+                </div>
+                <div class="popupFormRow">
+                    <button id="confirmAdding">Add Product</button>
+                    <button id="cancelAdding">Cancel</button>
+                </div>
             </div>
         </div>
         `;
@@ -209,30 +227,48 @@ function updateProduct(id){
         <div style="position: fixed; top: 0; left: 0; width: 100%; 
         height: 100%; background: rgba(0, 0, 0, 0.4); 
         display: flex; align-items: center; justify-content: center">
-            <div style="background-color: white; padding: 20px; border-radius: 10px">
+            <div style="background-color: white; padding: 20px; border-radius: 10px; width: 250px">
                 <h2>Update Product</h2>
-                <label for="updateNameInput">Name: </label>
-                <input id="updateNameInput" value="${product.name}"><br>
-                <label for="updateDescInput">Description: </label>
-                <input id="updateDescInput" value="${product.description}"><br>
-                <label for="updateBrandInput">Brand: </label>
-                <input id="updateBrandInput" value="${product.brand}"><br>
-                <label for="updatePriceInput">Price: </label>
-                <input id="updatePriceInput" type="number" value="${product.price}"><br>
-                <label for="updateCategoryInput">Category: </label>
-                <input id="updateCategoryInput" value="${product.category}"><br>
-                <label for="updateReleaseDateInput">Release Date:</label>
-                <input id="updateReleaseDateInput" type="date" value="${product.releaseDate}"><br>
-                <label for="updateQuantityInput">Quantity: </label>
-                <input id="updateQuantityInput" type="number" value="${product.quantity}"><br>
-                <label for="updateAvailabilityInput">Availability: </label>
-                <select id="updateAvailabilityInput">
-                    <option value="">Select Availability</option>
-                    <option value="true">Available</option>
-                    <option value="false">Not available</option>
-                </select><br>
-                <button id="confirmUpdate">Confirm</button>
-                <button id="cancelUpdate">Cancel</button>
+                    <div class="popupFormRow">
+                        <label for="updateNameInput">Name: </label>
+                        <input id="updateNameInput" value="${product.name}">
+                    </div>
+                    <div class="popupFormRow">
+                        <label for="updateDescInput">Description: </label>
+                        <input id="updateDescInput" value="${product.description}">
+                    </div>
+                    <div class="popupFormRow">
+                        <label for="updateBrandInput">Brand: </label>
+                        <input id="updateBrandInput" value="${product.brand}">
+                    </div>
+                    <div class="popupFormRow">
+                        <label for="updatePriceInput">Price: </label>
+                        <input id="updatePriceInput" type="number" value="${product.price}">
+                    </div>
+                    <div class="popupFormRow">
+                        <label for="updateCategoryInput">Category: </label>
+                        <input id="updateCategoryInput" value="${product.category}">
+                    </div>
+                    <div class="popupFormRow">
+                        <label for="updateReleaseDateInput">Release Date: </label>
+                        <input id="updateReleaseDateInput" type="date" value="${product.releaseDate}">
+                    </div>
+                    <div class="popupFormRow">
+                        <label for="updateQuantityInput">Quantity: </label>
+                        <input id="updateQuantityInput" type="number" value="${product.quantity}">
+                    </div>
+                    <div class="popupFormRow">
+                        <label for="updateAvailabilityInput">Availability: </label>
+                        <select id="updateAvailabilityInput">
+                            <option value="">Select Availability</option>
+                            <option value="true">Available</option>
+                            <option value="false">Not available</option>
+                        </select>
+                    </div>
+                    <div class="popupFormRow">
+                        <button id="confirmUpdate">Confirm</button>
+                        <button id="cancelUpdate">Cancel</button>
+                    </div>
             </div>
         </div>
         `;
@@ -342,7 +378,7 @@ function showLowStockDetails() {
         <div style="position: fixed; top: 0; left: 0; width: 100%; 
         height: 100%; background: rgba(0, 0, 0, 0.4); 
         display: flex; align-items: center; justify-content: center">
-            <div style="background-color: white; padding: 20px; border-radius: 10px">
+            <div style="background-color: white; padding: 20px; border-radius: 10px; width: 250px">
                 <h2>Low Stock</h2>
                 ${lowStockDetails}
                 <button id="cancelPopup">Close</button>

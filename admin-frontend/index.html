@@ -21,6 +21,12 @@
             font-weight: bold;
         }
 
+        .menu{
+            font-size: 20px;
+            font-weight: bold;
+            color: brown;
+        }
+
         .dropdown{
             display: inline-block;
             position: relative;
@@ -103,8 +109,9 @@
             background-color: #f8f8f8;
         }
 
-        input, select{
+        .popupFormRow{
             margin-bottom: 10px;
+            text-align: left;
         }
 
         button{
@@ -115,37 +122,6 @@
             border-radius: 8px;
             border: 1px solid grey;
             background-color: beige;
-        }
-
-        .addBox{
-            text-align: center;
-            margin-top: 20px;
-            margin-right: auto;
-            margin-left: auto;
-            border: 1px solid silver;
-            border-radius: 10px;
-            width: 80%;
-            padding: 10px;
-            background-color: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .addBox:hover{
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .addBox input,
-        .addBox select{
-            width: 300px;
-            box-sizing: border-box;
-            padding: 5px;
-        }
-
-        .addBox h2{
-            margin-top: 0;
-            text-align: center;
         }
 
         #products{
@@ -180,7 +156,7 @@
 <div class="navBar">
     <div class="navBar-title">Ecom Admin</div>
     <div class="dropdown">
-        <button>menu</button>
+        <button class="menu">menu</button>
 
         <div class="dropdown-content">
             <a href="#intro">Website Intro</a>
