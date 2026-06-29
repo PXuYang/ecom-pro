@@ -442,7 +442,7 @@ function searchBox(type){
                     <input id="searchInput" type="text" placeholder="Search Products" />
                 </div>
                 <div>
-                    <button id="searchButton"">Search</button>
+                    <button id="searchButton">Search</button>
                     <button id="cancelPopup">Cancel</button>
                 </div>
             </div>
