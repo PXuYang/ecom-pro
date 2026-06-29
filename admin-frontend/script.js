@@ -79,85 +79,116 @@ function deleteProduct(id){
 
 function addProduct(){
 
-    let name = document.getElementById("nameInput").value;
-    let desc = document.getElementById("descInput").value;
-    let brand = document.getElementById("brandInput").value;
-    let price = document.getElementById("priceInput").value;
-    let category = document.getElementById("categoryInput").value;
-    let releaseDate = document.getElementById("releaseDateInput").value;
-    let availability = document.getElementById("availabilityInput").value;
-    let quantity = document.getElementById("quantityInput").value;
+    let popup = document.createElement("div");
+    popup.innerHTML = `
+        <div style="position: fixed; top: 0; left: 0; width: 100%; 
+        height: 100%; background: rgba(0, 0, 0, 0.4); 
+        display: flex; align-items: center; justify-content: center">
+            <div style="background-color: white; padding: 20px; border-radius: 10px">
+                <h2>Add Product</h2>
+                <label for="nameInput">Name: </label>
+                <input id="nameInput" placeholder="Name"><br>
+                <label for="descInput">Description: </label>
+                <input id="descInput" placeholder="Description"><br>
+                <label for="brandInput">Brand: </label>
+                <input id="brandInput" placeholder="Brand"><br>
+                <label for="priceInput">Price: </label>
+                <input id="priceInput" type="number" placeholder="Price"><br>
+                <label for="categoryInput">Category: </label>
+                <input id="categoryInput" placeholder="Category"><br>
+                <label for="releaseDateInput">Release Date:</label>
+                <input id="releaseDateInput" type="date"><br>
+                <label for="quantityInput">Quantity: </label>
+                <input id="quantityInput" type="number" placeholder="Quantity"><br>
+                <label for="availabilityInput">Availability: </label>
+                <select id="availabilityInput">
+                    <option value="">Select Availability</option>
+                    <option value="true">Available</option>
+                    <option value="false">Not available</option>
+                </select><br>
+                <button id="confirmAdding">Add Product</button>
+                <button id="cancelAdding">Cancel</button>
+            </div>
+        </div>
+        `;
 
-    if(name === "" || desc === "" || brand === ""
-        || category === ""){
-        alert("Please enter a valid product!");
-        return;
-    }
-
-    if(price === "" || isNaN(Number(price))){
-        alert("Price must be number!");
-        return;
-    }
-
-    let datePattern = /^\d{4}-\d{2}-\d{2}$/;
-    if(!datePattern.test(releaseDate)){
-        alert("Invalid date! Must be yyyy-MM-dd format!");
-        return;
-    }
-
-    if(availability === ""){
-        alert("Please select availability!");
-        return;
-    }
-
-    if(quantity === "" || isNaN(Number(quantity))){
-        alert("Quantity must be number!");
-        return;
-    }
-
-    let product = {
-        name: name,
-        description: desc,
-        brand: brand,
-        price: Number(price),
-        category: category,
-        releaseDate: releaseDate,
-        availability: availability === "true",
-        quantity: Number(quantity),
+    document.body.appendChild(popup);
+    document.getElementById("cancelAdding").onclick = function () {
+        popup.remove();
     };
+    document.getElementById("confirmAdding").onclick = function () {
+        let name = document.getElementById("nameInput").value;
+        let desc = document.getElementById("descInput").value;
+        let brand = document.getElementById("brandInput").value;
+        let price = document.getElementById("priceInput").value;
+        let category = document.getElementById("categoryInput").value;
+        let releaseDate = document.getElementById("releaseDateInput").value;
+        let availability = document.getElementById("availabilityInput").value;
+        let quantity = document.getElementById("quantityInput").value;
 
-    console.log(product);
+        if(name === "" || desc === "" || brand === ""
+            || category === ""){
+            alert("Please enter a valid product!");
+            return;
+        }
 
-    fetch("http://localhost:8080/api/products", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(product),
-    })
-        .then(response => {
-            if (!response.ok) {
-                return response.json()
-                    .then(errorData => {
-                        alert(errorData.message + " Please check your input!");
-                    })
-            }
+        if(price === "" || isNaN(Number(price))){
+            alert("Price must be number!");
+            return;
+        }
 
-            document.getElementById("nameInput").value = "";
-            document.getElementById("descInput").value = "";
-            document.getElementById("brandInput").value = "";
-            document.getElementById("priceInput").value = "";
-            document.getElementById("categoryInput").value = "";
-            document.getElementById("releaseDateInput").value = "";
-            document.getElementById("availabilityInput").value = "";
-            document.getElementById("quantityInput").value = "";
+        let datePattern = /^\d{4}-\d{2}-\d{2}$/;
+        if(!datePattern.test(releaseDate)){
+            alert("Invalid date! Must be yyyy-MM-dd format!");
+            return;
+        }
 
-            loadProduct();
+        if(availability === ""){
+            alert("Please select availability!");
+            return;
+        }
+
+        if(quantity === "" || isNaN(Number(quantity))){
+            alert("Quantity must be number!");
+            return;
+        }
+
+        let product = {
+            name: name,
+            description: desc,
+            brand: brand,
+            price: Number(price),
+            category: category,
+            releaseDate: releaseDate,
+            availability: availability === "true",
+            quantity: Number(quantity),
+        };
+
+        console.log(product);
+
+        fetch("http://localhost:8080/api/products", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(product),
         })
-        .catch(error => {
-            console.log(error);
-            alert("Failed to create product!");
-        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json()
+                        .then(errorData => {
+                            alert(errorData.message + " Please check your input!");
+                        })
+                }
+
+                loadProduct();
+                popup.remove();
+            })
+            .catch(error => {
+                console.log(error);
+                alert("Failed to create product!");
+            })
+    };
 
 }
 
