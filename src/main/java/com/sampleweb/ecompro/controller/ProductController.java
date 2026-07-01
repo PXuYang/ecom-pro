@@ -4,7 +4,6 @@ import com.sampleweb.ecompro.DTO.ProductResponse;
 import com.sampleweb.ecompro.DTO.ProductRequest;
 import com.sampleweb.ecompro.DTO.ProductStatResponse;
 import com.sampleweb.ecompro.service.ProductService;
-import jakarta.validation.Path;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +32,7 @@ public class ProductController {
 
     @GetMapping("/products")
     public ResponseEntity<List<ProductResponse>> getAllProducts(){
-        List<ProductResponse> products = service.getALlProducts();
+        List<ProductResponse> products = service.getAllProducts();
         return ResponseEntity.ok(products);
     }
 

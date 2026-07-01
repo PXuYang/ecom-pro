@@ -34,7 +34,7 @@ public class ProductService {
         return newPro;
     }
 
-    public List<ProductResponse> getALlProducts(){
+    public List<ProductResponse> getAllProducts(){
         return repo.findAll().stream().map(this::toResponse).toList();
     }
 
