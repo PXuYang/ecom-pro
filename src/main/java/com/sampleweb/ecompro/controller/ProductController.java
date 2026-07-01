@@ -37,6 +37,36 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
 
+    @GetMapping("/products/asc")
+    public ResponseEntity<List<ProductResponse>> findAllByOrderByNameAsc(){
+        List<ProductResponse> products = service.findAllByOrderByNameAsc();
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/products/price/asc")
+    public ResponseEntity<List<ProductResponse>> findAllByOrderByPriceAsc(){
+        List<ProductResponse> products = service.findAllByOrderByPriceAsc();
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/products/price/desc")
+    public ResponseEntity<List<ProductResponse>> findAllByOrderByPriceDesc(){
+        List<ProductResponse> products = service.findAllByOrderByPriceDesc();
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/products/quantity/asc")
+    public ResponseEntity<List<ProductResponse>> findAllByOrderByQuantityAsc(){
+        List<ProductResponse> products = service.findAllByOrderByQuantityAsc();
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/products/quantity/desc")
+    public ResponseEntity<List<ProductResponse>> findAllByOrderByQuantityDesc(){
+        List<ProductResponse> products = service.findAllByOrderByQuantityDesc();
+        return ResponseEntity.ok(products);
+    }
+
     @GetMapping("/products/{id}")
     public ResponseEntity<ProductResponse> getProductById(@PathVariable int id){
         ProductResponse pro = service.getProductById(id);

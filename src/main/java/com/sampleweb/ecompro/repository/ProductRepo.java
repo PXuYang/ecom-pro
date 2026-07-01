@@ -14,5 +14,10 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
     List<Product> findByNameContainingIgnoreCase(String nameKeyword);
     List<Product> findByAvailability(boolean availability);
     List<Product> findByBrandContainingIgnoreCase(String brandKeyword);
+    List<Product> findAllByOrderByNameAsc();
+    List<Product> findAllByOrderByPriceAsc();
+    List<Product> findAllByOrderByPriceDesc();
+    List<Product> findAllByOrderByQuantityAsc();
+    List<Product> findAllByOrderByQuantityDesc();
 
 }
