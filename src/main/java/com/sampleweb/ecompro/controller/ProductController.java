@@ -80,8 +80,8 @@ public class ProductController {
     }
 
     @GetMapping("/products/category/{category}")
-    public ResponseEntity<List<ProductResponse>> findByCategory(@PathVariable String category){
-        List<ProductResponse> byCategory = service.findByCategory(category);
+    public ResponseEntity<List<ProductResponse>> findByCategoryContainingIgnoreCase(@PathVariable String category){
+        List<ProductResponse> byCategory = service.findByCategoryContainingIgnoreCase(category);
         return ResponseEntity.ok(byCategory);
     }
 

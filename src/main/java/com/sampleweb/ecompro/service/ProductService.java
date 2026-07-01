@@ -112,8 +112,8 @@ public class ProductService {
         return repo.findByQuantityLessThan(10).stream().map(this::toResponse).toList();
     }
 
-    public List<ProductResponse> findByCategory(String category){
-        return repo.findByCategoryIgnoreCase(category).stream().map(this::toResponse).toList();
+    public List<ProductResponse> findByCategoryContainingIgnoreCase(String category){
+        return repo.findByCategoryContainingIgnoreCase(category).stream().map(this::toResponse).toList();
     }
 
     public List<ProductResponse> findByNameContainingIgnoreCase(String keyword){
