@@ -128,4 +128,24 @@ public class ProductService {
         return repo.findByBrandContainingIgnoreCase(brandKeyword).stream().map(this::toResponse).toList();
     }
 
+    public List<ProductResponse> findAllByOrderByNameAsc(){
+        return repo.findAllByOrderByNameAsc().stream().map(this::toResponse).toList();
+    }
+
+    public List<ProductResponse> findAllByOrderByPriceAsc(){
+        return repo.findAllByOrderByPriceAsc().stream().map(this::toResponse).toList();
+    }
+
+    public List<ProductResponse> findAllByOrderByPriceDesc(){
+        return repo.findAllByOrderByPriceDesc().stream().map(this::toResponse).toList();
+    }
+
+    public List<ProductResponse> findAllByOrderByQuantityAsc(){
+        return repo.findAllByOrderByQuantityAsc().stream().map(this::toResponse).toList();
+    }
+
+    public List<ProductResponse> findAllByOrderByQuantityDesc(){
+        return repo.findAllByOrderByQuantityDesc().stream().map(this::toResponse).toList();
+    }
+
 }

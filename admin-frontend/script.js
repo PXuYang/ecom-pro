@@ -469,6 +469,71 @@ function filterLowStock(){
     });
 }
 
+function sortByName(){
+    fetch("http://localhost:8080/api/products/asc")
+    .then(response => response.json())
+    .then(products => {
+        console.log("Loaded products", products);
+        displayProducts(products);
+    })
+    .catch(error => {
+        console.log(error);
+        document.getElementById("products").innerText = "Failed to load products...";
+    });
+}
+
+function sortByPriceAsc(){
+    fetch("http://localhost:8080/api/products/price/asc")
+    .then(response => response.json())
+    .then(products => {
+        console.log("Loaded products", products);
+        displayProducts(products);
+    })
+    .catch(error => {
+        console.log(error);
+        document.getElementById("products").innerText = "Failed to load products...";
+    });
+}
+
+function sortByPriceDesc(){
+    fetch("http://localhost:8080/api/products/price/desc")
+    .then(response => response.json())
+    .then(products => {
+        console.log("Loaded products", products);
+        displayProducts(products);
+    })
+    .catch(error => {
+        console.log(error);
+        document.getElementById("products").innerText = "Failed to load products...";
+    });
+}
+
+function sortByQuantityAsc(){
+    fetch("http://localhost:8080/api/products/quantity/asc")
+    .then(response => response.json())
+    .then(products => {
+        console.log("Loaded products", products);
+        displayProducts(products);
+    })
+    .catch(error => {
+        console.log(error);
+        document.getElementById("products").innerText = "Failed to load products...";
+    });
+}
+
+function sortByQuantityDesc(){
+    fetch("http://localhost:8080/api/products/quantity/desc")
+    .then(response => response.json())
+    .then(products => {
+        console.log("Loaded products", products);
+        displayProducts(products);
+    })
+    .catch(error => {
+        console.log(error);
+        document.getElementById("products").innerText = "Failed to load products...";
+    });
+}
+
 function searchBox(type){
     let popup = document.createElement("div");
     popup.innerHTML = `
