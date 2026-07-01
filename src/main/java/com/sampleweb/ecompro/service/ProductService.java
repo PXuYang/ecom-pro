@@ -85,25 +85,16 @@ public class ProductService {
     }
 
     public ProductStatResponse getStatData(){
-        List<Product> products = repo.findAll();
+
         ProductStatResponse productStatResponse = new ProductStatResponse();
 
-        int lowStockCount = 0;
+        long totalCount = repo.count();
+        long lowStockCount = repo.countByQuantityLessThan(10);
+        long categoryCount = repo.countByDistinctCategory();
 
-        List<String> category = new ArrayList<>();
-        for(Product product : products){
-
-            if(product.getQuantity() < 10){
-                lowStockCount++;
-            }
-            if(!category.contains(product.getCategory())){
-                category.add(product.getCategory());
-            }
-        }
-
-        productStatResponse.setTotalProductCount(products.size());
-        productStatResponse.setLowStockCount(lowStockCount);
-        productStatResponse.setCategoryCount(category.size());
+        productStatResponse.setTotalProductCount((int)totalCount);
+        productStatResponse.setLowStockCount((int)lowStockCount);
+        productStatResponse.setCategoryCount((int)categoryCount);
 
         return productStatResponse;
     }
