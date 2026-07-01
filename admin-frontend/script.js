@@ -399,9 +399,7 @@ function showLowStockDetails() {
 
 function findByCategory(category) {
 
-    fetch("http://localhost:8080/api/products/category/" + category, {
-        method: "GET",
-    })
+    fetch("http://localhost:8080/api/products/category/" + category)
     .then(response => response.json())
     .then(byCategory => {
 
@@ -417,9 +415,7 @@ function findByCategory(category) {
 }
 
 function findByName(keyword) {
-    fetch("http://localhost:8080/api/products/byname/" + keyword, {
-        method: "GET",
-    })
+    fetch("http://localhost:8080/api/products/byname/" + keyword)
         .then(response => response.json())
         .then(byName => {
 
@@ -431,6 +427,46 @@ function findByName(keyword) {
             console.log(error);
             document.getElementById("products").innerText = "Failed to load products...";
         });
+}
+
+function findByBrand(brand) {
+    fetch("http://localhost:8080/api/products/bybrand/" + brand)
+        .then(response => response.json())
+        .then(byBrand => {
+            console.log("Loaded products", byBrand);
+            displayProducts(byBrand);
+        })
+        .catch(error => {
+            console.log(error);
+            document.getElementById("products").innerText = "Failed to load products...";
+        });
+}
+
+function filterByAvailability(availability) {
+    fetch("http://localhost:8080/api/products/byavailability/" + availability)
+    .then(response => response.json())
+    .then(byAvailability => {
+
+        console.log("Loaded availability", byAvailability);
+        displayProducts(byAvailability);
+    })
+    .catch(error => {
+        console.log(error);
+        document.getElementById("products").innerText = "Failed to load products...";
+    });
+}
+
+function filterLowStock(){
+    fetch("http://localhost:8080/api/products/low-stock")
+    .then(response => response.json())
+    .then(lowStock => {
+        console.log("Low stock: ", lowStock);
+        displayProducts(lowStock);
+    })
+    .catch(error => {
+        console.log(error);
+        document.getElementById("products").innerText = "Failed to load products...";
+    });
 }
 
 function searchBox(type){
@@ -461,12 +497,55 @@ function searchBox(type){
         if(type === "category") {
             findByCategory(input);
         }
+        if(type === "brand"){
+            findByBrand(input);
+        }
         popup.remove();
     }
 
     document.getElementById("cancelPopup").onclick = function () {
         popup.remove();
     };
+}
+
+function filterBox(type){
+    let popup = document.createElement("div");
+
+    if(type === "availability"){
+        popup.innerHTML = `
+        <div class="popupOverlay">
+            <div class="popupWindow">
+                <div class="popupFormRow">
+                    <h2>Filter By Availability</h2>
+                    <select id="filterAvailability">
+                        <option value="">Select Availability</option>
+                        <option value="true">Available</option>
+                        <option value="false">Not available</option>
+                    </select>
+                </div>
+                <div>
+                    <button id="searchAvailabilityButton">Search</button>
+                    <button id="cancelAvailabilityPopup">Cancel</button>
+                </div>
+            </div>
+        </div>`
+
+        document.body.appendChild(popup);
+        document.getElementById("searchAvailabilityButton").onclick = function () {
+            let input = document.getElementById("filterAvailability").value;
+
+            if(input === ""){
+                alert("Please select availability!");
+                return;
+            }
+            filterByAvailability(input);
+            popup.remove();
+        }
+        document.getElementById("cancelAvailabilityPopup").onclick = function () {
+            popup.remove();
+        };
+    }
+
 }
 
 function refreshPage(){

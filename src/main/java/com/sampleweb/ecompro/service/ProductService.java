@@ -112,12 +112,20 @@ public class ProductService {
         return repo.findByQuantityLessThan(10).stream().map(this::toResponse).toList();
     }
 
-    public List<ProductResponse> findByCategoryContainingIgnoreCase(String category){
-        return repo.findByCategoryContainingIgnoreCase(category).stream().map(this::toResponse).toList();
+    public List<ProductResponse> findByCategoryContainingIgnoreCase(String categoryKeyword){
+        return repo.findByCategoryContainingIgnoreCase(categoryKeyword).stream().map(this::toResponse).toList();
     }
 
-    public List<ProductResponse> findByNameContainingIgnoreCase(String keyword){
-        return repo.findByNameContainingIgnoreCase(keyword).stream().map(this::toResponse).toList();
+    public List<ProductResponse> findByNameContainingIgnoreCase(String nameKeyword){
+        return repo.findByNameContainingIgnoreCase(nameKeyword).stream().map(this::toResponse).toList();
+    }
+
+    public List<ProductResponse> findByAvailability(boolean availability){
+        return repo.findByAvailability(availability).stream().map(this::toResponse).toList();
+    }
+
+    public List<ProductResponse> findByBrandContainingIgnoreCase(String brandKeyword){
+        return repo.findByBrandContainingIgnoreCase(brandKeyword).stream().map(this::toResponse).toList();
     }
 
 }

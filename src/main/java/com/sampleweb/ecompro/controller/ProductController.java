@@ -79,16 +79,28 @@ public class ProductController {
         return ResponseEntity.ok(lowStock);
     }
 
-    @GetMapping("/products/category/{category}")
-    public ResponseEntity<List<ProductResponse>> findByCategoryContainingIgnoreCase(@PathVariable String category){
-        List<ProductResponse> byCategory = service.findByCategoryContainingIgnoreCase(category);
+    @GetMapping("/products/category/{categoryKeyword}")
+    public ResponseEntity<List<ProductResponse>> findByCategoryContainingIgnoreCase(@PathVariable String categoryKeyword){
+        List<ProductResponse> byCategory = service.findByCategoryContainingIgnoreCase(categoryKeyword);
         return ResponseEntity.ok(byCategory);
     }
 
-    @GetMapping("/products/byname/{keyword}")
-    public ResponseEntity<List<ProductResponse>> findByNameContainingIgnoreCase(@PathVariable String keyword){
-        List<ProductResponse> byName = service.findByNameContainingIgnoreCase(keyword);
+    @GetMapping("/products/byname/{nameKeyword}")
+    public ResponseEntity<List<ProductResponse>> findByNameContainingIgnoreCase(@PathVariable String nameKeyword){
+        List<ProductResponse> byName = service.findByNameContainingIgnoreCase(nameKeyword);
         return ResponseEntity.ok(byName);
+    }
+
+    @GetMapping("/products/byavailability/{availability}")
+    public ResponseEntity<List<ProductResponse>> findByAvailability(@PathVariable boolean availability){
+        List<ProductResponse> byAvailability = service.findByAvailability(availability);
+        return ResponseEntity.ok(byAvailability);
+    }
+
+    @GetMapping("/products/bybrand/{brandKeyword}")
+    public ResponseEntity<List<ProductResponse>> findByBrandContainingIgnoreCase(@PathVariable String brandKeyword){
+        List<ProductResponse> byBrand = service.findByBrandContainingIgnoreCase(brandKeyword);
+        return ResponseEntity.ok(byBrand);
     }
 
 }

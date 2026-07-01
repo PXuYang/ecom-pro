@@ -10,8 +10,9 @@ import java.util.List;
 public interface ProductRepo extends JpaRepository<Product, Integer> {
 
     List<Product> findByQuantityLessThan(int quantity);
-    List<Product> findByCategoryContainingIgnoreCase(String category);
-    List<Product> findByNameContainingIgnoreCase(String keyword);
-
+    List<Product> findByCategoryContainingIgnoreCase(String categoryKeyword);
+    List<Product> findByNameContainingIgnoreCase(String nameKeyword);
+    List<Product> findByAvailability(boolean availability);
+    List<Product> findByBrandContainingIgnoreCase(String brandKeyword);
 
 }

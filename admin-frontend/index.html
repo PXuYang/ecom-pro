@@ -160,6 +160,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 1000;
         }
 
         .popupWindow{
@@ -167,7 +168,6 @@
             padding: 20px;
             border-radius: 10px;
             width: 250px;
-            z-index: 10;
         }
 
         .popupFormRow{
@@ -234,9 +234,9 @@
             <div class="dropdown-content">
                 <a onclick="searchBox('name')">Search by name</a>
                 <a onclick="searchBox('category')">Search by category</a>
-                <a>Filter by availability</a>
-                <a>Filter by brand</a>
-                <a>Low stock</a>
+                <a onclick="searchBox('brand')">Search by brand</a>
+                <a onclick="filterBox('availability')">Filter by availability</a>
+                <a onclick="filterLowStock()">Low stock</a>
             </div>
         </div>
         <div class="dropdown">
