@@ -452,7 +452,7 @@ function searchBox(type){
     document.getElementById("searchButton").onclick = function () {
         let input = document.getElementById("searchInput").value;
         if(input === ""){
-            alert("Please enter a valid category!");
+            alert("Please enter a valid value!");
             return;
         }
         if(type === "name"){
