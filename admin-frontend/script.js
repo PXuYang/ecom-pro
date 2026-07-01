@@ -29,19 +29,7 @@ function loadProduct(){
 
     document.getElementById("products").innerText = "Loading products...";
 
-    fetch("http://localhost:8080/api/products")
-    .then(response => response.json())
-    .then(products => {
-
-        currentProducts = products;
-        console.log("Loaded products", products);
-
-        displayProducts(products);
-    })
-        .catch(error => {
-            console.log(error);
-            document.getElementById("products").innerText = "Failed to load products...";
-        });
+    loadURLPage("http://localhost:8080/api/products");
 }
 
 function showProductStat(){
@@ -221,6 +209,11 @@ function updateProduct(id){
         }
     }
 
+    if(product === null){
+        alert("Product not found!");
+        return;
+    }
+
     console.log("Selected product: ", product);
 
     let popup = document.createElement("div");
@@ -397,141 +390,54 @@ function showLowStockDetails() {
         })
 }
 
-function findByCategory(category) {
+function findByCategory(categoryKeyword) {
 
-    fetch("http://localhost:8080/api/products/category/" + category)
-    .then(response => response.json())
-    .then(byCategory => {
-
-            console.log("Loaded products", byCategory);
-
-            displayProducts(byCategory);
-
-        })
-        .catch(error => {
-            console.log(error);
-            document.getElementById("products").innerText = "Failed to load products...";
-        });
+    loadURLPage("http://localhost:8080/api/products/bycategory/" + categoryKeyword);
 }
 
-function findByName(keyword) {
-    fetch("http://localhost:8080/api/products/byname/" + keyword)
-        .then(response => response.json())
-        .then(byName => {
+function findByName(nameKeyword) {
 
-            console.log("Loaded products", byName);
-
-            displayProducts(byName);
-        })
-        .catch(error => {
-            console.log(error);
-            document.getElementById("products").innerText = "Failed to load products...";
-        });
+    loadURLPage("http://localhost:8080/api/products/byname/" + nameKeyword);
 }
 
-function findByBrand(brand) {
-    fetch("http://localhost:8080/api/products/bybrand/" + brand)
-        .then(response => response.json())
-        .then(byBrand => {
-            console.log("Loaded products", byBrand);
-            displayProducts(byBrand);
-        })
-        .catch(error => {
-            console.log(error);
-            document.getElementById("products").innerText = "Failed to load products...";
-        });
+function findByBrand(brandKeyword) {
+
+    loadURLPage("http://localhost:8080/api/products/bybrand/" + brandKeyword);
 }
 
 function filterByAvailability(availability) {
-    fetch("http://localhost:8080/api/products/byavailability/" + availability)
-    .then(response => response.json())
-    .then(byAvailability => {
 
-        console.log("Loaded availability", byAvailability);
-        displayProducts(byAvailability);
-    })
-    .catch(error => {
-        console.log(error);
-        document.getElementById("products").innerText = "Failed to load products...";
-    });
+    loadURLPage("http://localhost:8080/api/products/byavailability/" + availability);
 }
 
 function filterLowStock(){
-    fetch("http://localhost:8080/api/products/low-stock")
-    .then(response => response.json())
-    .then(lowStock => {
-        console.log("Low stock: ", lowStock);
-        displayProducts(lowStock);
-    })
-    .catch(error => {
-        console.log(error);
-        document.getElementById("products").innerText = "Failed to load products...";
-    });
+
+    loadURLPage("http://localhost:8080/api/products/low-stock");
 }
 
 function sortByName(){
-    fetch("http://localhost:8080/api/products/asc")
-    .then(response => response.json())
-    .then(products => {
-        console.log("Loaded products", products);
-        displayProducts(products);
-    })
-    .catch(error => {
-        console.log(error);
-        document.getElementById("products").innerText = "Failed to load products...";
-    });
+
+    loadURLPage("http://localhost:8080/api/products/asc");
 }
 
-function sortByPriceAsc(){
-    fetch("http://localhost:8080/api/products/price/asc")
-    .then(response => response.json())
-    .then(products => {
-        console.log("Loaded products", products);
-        displayProducts(products);
-    })
-    .catch(error => {
-        console.log(error);
-        document.getElementById("products").innerText = "Failed to load products...";
-    });
+function sortByPriceAsc() {
+
+    loadURLPage("http://localhost:8080/api/products/price/asc");
 }
 
 function sortByPriceDesc(){
-    fetch("http://localhost:8080/api/products/price/desc")
-    .then(response => response.json())
-    .then(products => {
-        console.log("Loaded products", products);
-        displayProducts(products);
-    })
-    .catch(error => {
-        console.log(error);
-        document.getElementById("products").innerText = "Failed to load products...";
-    });
+
+    loadURLPage("http://localhost:8080/api/products/price/desc");
 }
 
 function sortByQuantityAsc(){
-    fetch("http://localhost:8080/api/products/quantity/asc")
-    .then(response => response.json())
-    .then(products => {
-        console.log("Loaded products", products);
-        displayProducts(products);
-    })
-    .catch(error => {
-        console.log(error);
-        document.getElementById("products").innerText = "Failed to load products...";
-    });
+
+    loadURLPage("http://localhost:8080/api/products/quantity/asc");
 }
 
 function sortByQuantityDesc(){
-    fetch("http://localhost:8080/api/products/quantity/desc")
-    .then(response => response.json())
-    .then(products => {
-        console.log("Loaded products", products);
-        displayProducts(products);
-    })
-    .catch(error => {
-        console.log(error);
-        document.getElementById("products").innerText = "Failed to load products...";
-    });
+
+    loadURLPage("http://localhost:8080/api/products/quantity/desc");
 }
 
 function searchBox(type){
@@ -611,6 +517,21 @@ function filterBox(type){
         };
     }
 
+}
+
+function loadURLPage(url){
+
+    fetch(url)
+        .then(response => response.json())
+        .then(products => {
+            console.log("Loaded products", products);
+            currentProducts = products;
+            displayProducts(products);
+        })
+        .catch(error => {
+            console.log(error);
+            document.getElementById("products").innerText = "Failed to load products...";
+        });
 }
 
 function refreshPage(){

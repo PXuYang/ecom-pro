@@ -108,7 +108,7 @@ public class ProductController {
         return ResponseEntity.ok(lowStock);
     }
 
-    @GetMapping("/products/category/{categoryKeyword}")
+    @GetMapping("/products/bycategory/{categoryKeyword}")
     public ResponseEntity<List<ProductResponse>> findByCategoryContainingIgnoreCase(@PathVariable String categoryKeyword){
         List<ProductResponse> byCategory = service.findByCategoryContainingIgnoreCase(categoryKeyword);
         return ResponseEntity.ok(byCategory);
