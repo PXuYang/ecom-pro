@@ -1,4 +1,5 @@
 let currentProducts = [];
+const defaultImageUrl = "No-Image-Found-400x264.png";
 
 function displayProducts(products) {
 
@@ -10,6 +11,10 @@ function displayProducts(products) {
         html += `
                 <div class="product-card">
                     <h2>${product.name}</h2>
+                    <img src="${product.imageUrl || defaultImageUrl}" 
+                    alt="${product.name}" 
+                    class="productImage"
+                    onerror="this.src='${defaultImageUrl}'">
                     <p>Description: ${product.description}</p>
                     <p>Price: $${product.price}</p>
                     <p>Brand: ${product.brand}</p>
@@ -100,6 +105,10 @@ function addProduct(){
                     <input id="releaseDateInput" type="date">
                 </div>
                 <div class="popupFormRow">
+                    <label for="imageUrlInput">Image URL: </label>
+                    <input id="imageUrlInput" type="text">
+                </div>
+                <div class="popupFormRow">
                     <label for="quantityInput">Quantity: </label>
                     <input id="quantityInput" type="number" placeholder="Quantity">
                 </div>
@@ -130,6 +139,7 @@ function addProduct(){
         let price = document.getElementById("priceInput").value;
         let category = document.getElementById("categoryInput").value;
         let releaseDate = document.getElementById("releaseDateInput").value;
+        let imageUrl = document.getElementById("imageUrlInput").value;
         let availability = document.getElementById("availabilityInput").value;
         let quantity = document.getElementById("quantityInput").value;
 
@@ -167,6 +177,7 @@ function addProduct(){
             price: Number(price),
             category: category,
             releaseDate: releaseDate,
+            imageUrl: imageUrl,
             availability: availability === "true",
             quantity: Number(quantity),
         };
@@ -246,6 +257,10 @@ function updateProduct(id){
                         <input id="updateReleaseDateInput" type="date" value="${product.releaseDate}">
                     </div>
                     <div class="popupFormRow">
+                        <label for="updateImageUrlInput">Image URL: </label>
+                        <input id="updateImageUrlInput" type="text" value="${product.imageUrl || ""}">
+                    </div>
+                    <div class="popupFormRow">
                         <label for="updateQuantityInput">Quantity: </label>
                         <input id="updateQuantityInput" type="number" value="${product.quantity}">
                     </div>
@@ -278,6 +293,7 @@ function updateProduct(id){
         let price = document.getElementById("updatePriceInput").value;
         let category = document.getElementById("updateCategoryInput").value;
         let releaseDate = document.getElementById("updateReleaseDateInput").value;
+        let imageUrl = document.getElementById("updateImageUrlInput").value;
         let availability = document.getElementById("updateAvailabilityInput").value;
         let quantity = document.getElementById("updateQuantityInput").value;
 
@@ -315,6 +331,7 @@ function updateProduct(id){
             price: Number(price),
             category: category,
             releaseDate: releaseDate,
+            imageUrl: imageUrl,
             availability: availability === "true",
             quantity: Number(quantity),
         };

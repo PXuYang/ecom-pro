@@ -23,6 +23,7 @@ public class ProductRequest {
     private String category;
     @NotNull(message = "Product release date is required")
     private Date releaseDate;
+    private String imageUrl;
     private boolean availability;
     @PositiveOrZero(message = "Product quantity must be positive or zero")
     private int quantity;

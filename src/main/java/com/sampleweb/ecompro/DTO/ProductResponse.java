@@ -15,12 +15,13 @@ import java.util.Date;
         "price",
         "category",
         "releaseDate",
+        "imageUrl",
         "availability",
         "quantity"
 })
 public class ProductResponse {
 
-    private int id;
+    private Integer id;
     private String name;
     private String description;
     private String brand;
@@ -28,6 +29,7 @@ public class ProductResponse {
     private String category;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
     private Date releaseDate;
+    private String imageUrl;
     private boolean availability;
     private int quantity;
 

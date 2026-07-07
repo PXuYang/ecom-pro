@@ -9,7 +9,6 @@ import com.sampleweb.ecompro.DTO.ProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,6 +27,7 @@ public class ProductService {
         newPro.setPrice(pro.getPrice());
         newPro.setCategory(pro.getCategory());
         newPro.setReleaseDate(pro.getReleaseDate());
+        newPro.setImageUrl(pro.getImageUrl());
         newPro.setAvailability(pro.isAvailability());
         newPro.setQuantity(pro.getQuantity());
 
@@ -51,6 +51,7 @@ public class ProductService {
         product.setPrice(newPro.getPrice());
         product.setCategory(newPro.getCategory());
         product.setReleaseDate(newPro.getReleaseDate());
+        product.setImageUrl(newPro.getImageUrl());
         product.setAvailability(newPro.isAvailability());
         product.setQuantity(newPro.getQuantity());
 
@@ -66,6 +67,7 @@ public class ProductService {
         oldPro.setPrice(newPro.getPrice());
         oldPro.setCategory(newPro.getCategory());
         oldPro.setReleaseDate(newPro.getReleaseDate());
+        oldPro.setImageUrl(newPro.getImageUrl());
         oldPro.setAvailability(newPro.isAvailability());
         oldPro.setQuantity(newPro.getQuantity());
 

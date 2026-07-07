@@ -37,6 +37,7 @@ public class Product {
     @NotNull(message = "Product release date is required")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
     private Date releaseDate;
+    private String imageUrl;
     private boolean availability;
     @PositiveOrZero(message = "Product quantity must be positive or zero")
     private int quantity;
