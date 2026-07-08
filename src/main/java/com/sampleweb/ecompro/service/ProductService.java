@@ -7,6 +7,9 @@ import com.sampleweb.ecompro.model.Product;
 import com.sampleweb.ecompro.repository.ProductRepo;
 import com.sampleweb.ecompro.DTO.ProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +19,12 @@ public class ProductService {
 
     @Autowired
     private ProductRepo repo;
+
+    public Page<ProductResponse> getProductByPage(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+
+        return repo.findAll(pageable).map(this::toResponse);
+    }
 
     private ProductResponse toResponse(Product pro){
         ProductResponse newPro = new ProductResponse();
@@ -101,44 +110,54 @@ public class ProductService {
         return productStatResponse;
     }
 
-    public List<ProductResponse> findByQuantityLessThan(){
-        return repo.findByQuantityLessThan(10).stream().map(this::toResponse).toList();
+    public Page<ProductResponse> findByQuantityLessThan(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.findByQuantityLessThan(10, pageable).map(this::toResponse);
     }
 
-    public List<ProductResponse> findByCategoryContainingIgnoreCase(String categoryKeyword){
-        return repo.findByCategoryContainingIgnoreCase(categoryKeyword).stream().map(this::toResponse).toList();
+    public Page<ProductResponse> findByCategoryContainingIgnoreCase(String categoryKeyword, int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.findByCategoryContainingIgnoreCase(categoryKeyword, pageable).map(this::toResponse);
     }
 
-    public List<ProductResponse> findByNameContainingIgnoreCase(String nameKeyword){
-        return repo.findByNameContainingIgnoreCase(nameKeyword).stream().map(this::toResponse).toList();
+    public Page<ProductResponse> findByNameContainingIgnoreCase(String nameKeyword, int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.findByNameContainingIgnoreCase(nameKeyword, pageable).map(this::toResponse);
     }
 
-    public List<ProductResponse> findByAvailability(boolean availability){
-        return repo.findByAvailability(availability).stream().map(this::toResponse).toList();
+    public Page<ProductResponse> findByAvailability(boolean availability, int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.findByAvailability(availability, pageable).map(this::toResponse);
     }
 
-    public List<ProductResponse> findByBrandContainingIgnoreCase(String brandKeyword){
-        return repo.findByBrandContainingIgnoreCase(brandKeyword).stream().map(this::toResponse).toList();
+    public Page<ProductResponse> findByBrandContainingIgnoreCase(String brandKeyword, int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.findByBrandContainingIgnoreCase(brandKeyword, pageable).map(this::toResponse);
     }
 
-    public List<ProductResponse> findAllByOrderByNameAsc(){
-        return repo.findAllByOrderByNameAsc().stream().map(this::toResponse).toList();
+    public Page<ProductResponse> findAllByOrderByNameAsc(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.findAllByOrderByNameAsc(pageable).map(this::toResponse);
     }
 
-    public List<ProductResponse> findAllByOrderByPriceAsc(){
-        return repo.findAllByOrderByPriceAsc().stream().map(this::toResponse).toList();
+    public Page<ProductResponse> findAllByOrderByPriceAsc(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.findAllByOrderByPriceAsc(pageable).map(this::toResponse);
     }
 
-    public List<ProductResponse> findAllByOrderByPriceDesc(){
-        return repo.findAllByOrderByPriceDesc().stream().map(this::toResponse).toList();
+    public Page<ProductResponse> findAllByOrderByPriceDesc(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.findAllByOrderByPriceDesc(pageable).map(this::toResponse);
     }
 
-    public List<ProductResponse> findAllByOrderByQuantityAsc(){
-        return repo.findAllByOrderByQuantityAsc().stream().map(this::toResponse).toList();
+    public Page<ProductResponse> findAllByOrderByQuantityAsc(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.findAllByOrderByQuantityAsc(pageable).map(this::toResponse);
     }
 
-    public List<ProductResponse> findAllByOrderByQuantityDesc(){
-        return repo.findAllByOrderByQuantityDesc().stream().map(this::toResponse).toList();
+    public Page<ProductResponse> findAllByOrderByQuantityDesc(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.findAllByOrderByQuantityDesc(pageable).map(this::toResponse);
     }
 
 }

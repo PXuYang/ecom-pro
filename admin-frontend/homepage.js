@@ -1,6 +1,125 @@
 const defaultImageUrl = "No-Image-Found-400x264.png";
 
+let currentPage = 0;
+let size = 2;
+let totalPages = 0;
+
+let currentMode = "normal";
+let currentKeyword = "";
+let currentAvailability = "";
+
+function loadProductsByPage(page) {
+    let url = "";
+
+    if (currentMode === "normal") {
+        url = "http://localhost:8080/api/products/page?page=" + page + "&size=" + size;
+    }
+
+    if (currentMode === "byCategory") {
+        url = "http://localhost:8080/api/products/bycategory/" + encodeURIComponent(currentKeyword) + "/page?page=" + page + "&size=" + size;
+    }
+
+    if(currentMode === "byName"){
+        url = "http://localhost:8080/api/products/byname/" + encodeURIComponent(currentKeyword) + "/page?page=" + page + "&size=" + size;
+    }
+
+    if(currentMode === "byBrand"){
+        url = "http://localhost:8080/api/products/bybrand/" + encodeURIComponent(currentKeyword) + "/page?page=" + page + "&size=" + size;
+    }
+
+    if(currentMode === "byAvailability"){
+        url = "http://localhost:8080/api/products/byavailability/" + currentAvailability + "/page?page=" + page + "&size=" + size;
+    }
+
+    if(currentMode === "lowStock"){
+        url = "http://localhost:8080/api/products/low-stock/page?page=" + page + "&size=" + size;
+    }
+
+    if(currentMode === "asc"){
+        url = "http://localhost:8080/api/products/asc/page?page=" + page + "&size=" + size;
+    }
+
+    if(currentMode === "priceAsc"){
+        url = "http://localhost:8080/api/products/price/asc/page?page=" + page + "&size=" + size;
+    }
+
+    if(currentMode === "priceDesc"){
+        url = "http://localhost:8080/api/products/price/desc/page?page=" + page + "&size=" + size;
+    }
+
+    if(currentMode === "quantityAsc"){
+        url = "http://localhost:8080/api/products/quantity/asc/page?page=" + page + "&size=" + size;
+    }
+
+    if(currentMode === "quantityDesc"){
+        url = "http://localhost:8080/api/products/quantity/desc/page?page=" + page + "&size=" + size;
+    }
+
+    fetch(url)
+        .then(response => {
+            if(!response.ok) {
+                throw new Error("Http error: " + response.status);
+            }
+            return response.json();
+        })
+        .then(pageData => {
+            console.log("Loaded page data: ", pageData);
+            currentPage = pageData.number;
+            totalPages = pageData.totalPages;
+
+            displayProducts(pageData.content);
+            displayPaginationButtons(pageData);
+        })
+        .catch(error => {
+            console.error(error);
+            document.getElementById("products").innerHTML = "Failed to load products...";
+        });
+}
+
+function displayPaginationButtons(pageData) {
+
+    let html = `
+        <div class="paginationBox">
+            <button onclick="previousPage()" ${pageData.first ? "disabled" : ""}>Previous</button>
+        `;
+
+        for (let i = 0; i < pageData.totalPages; i++) {
+            html += `
+            <button onclick="goToPage(${i})" ${pageData.number === i ? "disabled" : ""}>
+            ${i + 1}
+            </button>
+            `;
+        }
+
+        html += `<button onclick="nextPage()" ${pageData.last ? "disabled" : ""}>Next</button>
+        </div>
+        `;
+
+    document.getElementById("pagination").innerHTML = html;
+}
+
+function goToPage(page) {
+    loadProductsByPage(page);
+}
+
+function previousPage() {
+    if (currentPage > 0) {
+        loadProductsByPage(currentPage - 1);
+    }
+}
+
+function nextPage() {
+    if (currentPage < totalPages - 1) {
+        loadProductsByPage(currentPage + 1);
+    }
+}
+
 function displayProducts(products) {
+
+    if (products.length === 0) {
+        document.getElementById("products").innerHTML = "<p>No products found.</p>";
+        return;
+    }
 
     let html = "";
 
@@ -25,8 +144,7 @@ function displayProducts(products) {
 function loadProduct(){
 
     document.getElementById("products").innerText = "Loading products...";
-
-    loadURLPage("http://localhost:8080/api/products");
+    loadProductsByPage(currentPage);
 }
 
 function showProductStat(){
@@ -184,9 +302,11 @@ function showLowStockDetails() {
 
     let lowStockDetails = "";
 
-    fetch("http://localhost:8080/api/products/low-stock")
+    fetch("http://localhost:8080/api/products/low-stock/page?page=0&size=1000")
     .then(response => response.json())
-        .then(lowStock => {
+        .then(pageData => {
+
+            let lowStock = pageData.content || [];
 
             if(lowStock.length === 0){
                 lowStockDetails = "<p>There is no low stock product!</p>";
@@ -224,53 +344,67 @@ function showLowStockDetails() {
 }
 
 function findByCategory(categoryKeyword) {
-
-    loadURLPage("http://localhost:8080/api/products/bycategory/" + categoryKeyword);
+    currentMode = "byCategory";
+    currentKeyword = categoryKeyword;
+    currentPage = 0;
+    loadProductsByPage(currentPage);
 }
 
 function findByName(nameKeyword) {
-
-    loadURLPage("http://localhost:8080/api/products/byname/" + nameKeyword);
+    currentMode = "byName";
+    currentKeyword = nameKeyword;
+    currentPage = 0;
+    loadProductsByPage(currentPage);
 }
 
 function findByBrand(brandKeyword) {
-
-    loadURLPage("http://localhost:8080/api/products/bybrand/" + brandKeyword);
+    currentMode = "byBrand";
+    currentKeyword = brandKeyword;
+    currentPage = 0;
+    loadProductsByPage(currentPage);
 }
 
 function filterByAvailability(availability) {
-
-    loadURLPage("http://localhost:8080/api/products/byavailability/" + availability);
+    currentMode = "byAvailability";
+    currentAvailability = availability;
+    currentPage = 0;
+    loadProductsByPage(currentPage);
 }
 
 function filterLowStock(){
-
-    loadURLPage("http://localhost:8080/api/products/low-stock");
+    currentMode = "lowStock";
+    currentPage = 0;
+    loadProductsByPage(currentPage);
 }
 
 function sortByName(){
-
-    loadURLPage("http://localhost:8080/api/products/asc");
+    currentMode = "asc";
+    currentPage = 0;
+    loadProductsByPage(currentPage);
 }
 
 function sortByPriceAsc() {
-
-    loadURLPage("http://localhost:8080/api/products/price/asc");
+    currentMode = "priceAsc";
+    currentPage = 0;
+    loadProductsByPage(currentPage);
 }
 
 function sortByPriceDesc(){
-
-    loadURLPage("http://localhost:8080/api/products/price/desc");
+    currentMode = "priceDesc";
+    currentPage = 0;
+    loadProductsByPage(currentPage);
 }
 
 function sortByQuantityAsc(){
-
-    loadURLPage("http://localhost:8080/api/products/quantity/asc");
+    currentMode = "quantityAsc";
+    currentPage = 0;
+    loadProductsByPage(currentPage);
 }
 
 function sortByQuantityDesc(){
-
-    loadURLPage("http://localhost:8080/api/products/quantity/desc");
+    currentMode = "quantityDesc";
+    currentPage = 0;
+    loadProductsByPage(currentPage);
 }
 
 function searchBox(type){
@@ -312,61 +446,44 @@ function searchBox(type){
     };
 }
 
-function filterBox(type){
+function filterBox(){
     let popup = document.createElement("div");
 
-    if(type === "availability"){
-        popup.innerHTML = `
-        <div class="popupOverlay">
-            <div class="popupWindow">
-                <div class="popupFormRow">
-                    <h2>Filter By Availability</h2>
-                    <select id="filterAvailability">
-                        <option value="">Select Availability</option>
-                        <option value="true">Available</option>
-                        <option value="false">Not available</option>
-                    </select>
-                </div>
-                <div>
-                    <button id="searchAvailabilityButton">Search</button>
-                    <button id="cancelAvailabilityPopup">Cancel</button>
-                </div>
+    popup.innerHTML = `
+    <div class="popupOverlay">
+        <div class="popupWindow">
+            <div class="popupFormRow">
+                <h2>Filter By Availability</h2>
+                <select id="filterAvailability">
+                    <option value="">Select Availability</option>
+                    <option value="true">Available</option>
+                    <option value="false">Not available</option>
+                </select>
             </div>
-        </div>`
+            <div>
+                <button id="searchAvailabilityButton">Search</button>
+                <button id="cancelAvailabilityPopup">Cancel</button>
+            </div>
+        </div>
+   </div>`
+    document.body.appendChild(popup);
+    document.getElementById("searchAvailabilityButton").onclick = function (){
+    let input = document.getElementById("filterAvailability").value;
 
-        document.body.appendChild(popup);
-        document.getElementById("searchAvailabilityButton").onclick = function () {
-            let input = document.getElementById("filterAvailability").value;
-
-            if(input === ""){
-                alert("Please select availability!");
-                return;
-            }
-            filterByAvailability(input);
-            popup.remove();
-        }
-        document.getElementById("cancelAvailabilityPopup").onclick = function () {
-            popup.remove();
-        };
+    if(input === ""){
+        alert("Please select availability!");
+        return;
     }
-
-}
-
-function loadURLPage(url){
-
-    fetch(url)
-        .then(response => response.json())
-        .then(products => {
-            console.log("Loaded products", products);
-            displayProducts(products);
-        })
-        .catch(error => {
-            console.log(error);
-            document.getElementById("products").innerText = "Failed to load products...";
-        });
+    filterByAvailability(input);
+    popup.remove();
+    }
+    document.getElementById("cancelAvailabilityPopup").onclick = function () {
+        popup.remove();
+    };
 }
 
 function refreshPage(){
+    currentPage = 0;
     loadProduct();
     showProductStat();
 }

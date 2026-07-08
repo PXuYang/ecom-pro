@@ -28,7 +28,7 @@
         <h2>Dashboard</h2>
 
         <div class="statsRow">
-            <div class="statCard" onclick="loadProduct()">
+            <div class="statCard" onclick="refreshPage()">
                 <h3>Total Product</h3>
                 <p id="totalProCount">0</p>
             </div>
@@ -44,7 +44,7 @@
             </div>
         </div>
     </div>
-    <div class="productBox">
+    <div class="productFunctionBox">
         <h1 id="productSection" class="productList">Product List</h1>
         <div class="dropdown">
             <button class="filter"> ☰ filter</button>
@@ -71,6 +71,8 @@
     </div>
 
     <div id="products"></div>
+
+    <div id="pagination"></div>
 
     <script src="homepage.js"></script>
 
