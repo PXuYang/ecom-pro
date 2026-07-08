@@ -466,23 +466,28 @@ function filterBox(){
             </div>
         </div>
    </div>`
-    document.body.appendChild(popup);
-    document.getElementById("searchAvailabilityButton").onclick = function (){
-    let input = document.getElementById("filterAvailability").value;
 
-    if(input === ""){
-        alert("Please select availability!");
-        return;
-    }
-    filterByAvailability(input);
-    popup.remove();
-    }
+    document.body.appendChild(popup);
+
+    document.getElementById("searchAvailabilityButton").onclick = function (){
+        let input = document.getElementById("filterAvailability").value;
+        if(input === ""){
+            alert("Please select availability!");
+            return;
+        }
+        filterByAvailability(input);
+        popup.remove();
+    };
+
     document.getElementById("cancelAvailabilityPopup").onclick = function () {
         popup.remove();
     };
 }
 
 function refreshPage(){
+    currentMode = "normal";
+    currentKeyword = "";
+    currentAvailability = "";
     currentPage = 0;
     loadProduct();
     showProductStat();
