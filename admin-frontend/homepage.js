@@ -80,18 +80,18 @@ function displayPaginationButtons(pageData) {
 
     let html = `
         <div class="paginationBox">
-            <button onclick="previousPage()" ${pageData.first ? "disabled" : ""}>Previous</button>
+            <button type="button" onclick="previousPage()" ${pageData.first ? "disabled" : ""}>Previous</button>
         `;
 
         for (let i = 0; i < pageData.totalPages; i++) {
             html += `
-            <button onclick="goToPage(${i})" ${pageData.number === i ? "disabled" : ""}>
+            <button type="button" onclick="goToPage(${i})" ${pageData.number === i ? "disabled" : ""}>
             ${i + 1}
             </button>
             `;
         }
 
-        html += `<button onclick="nextPage()" ${pageData.last ? "disabled" : ""}>Next</button>
+        html += `<button type="button" onclick="nextPage()" ${pageData.last ? "disabled" : ""}>Next</button>
         </div>
         `;
 
@@ -209,8 +209,8 @@ function addProduct(){
                     </select>
                 </div>
                 <div class="popupFormRow">
-                    <button id="confirmAdding">Add Product</button>
-                    <button id="cancelAdding">Cancel</button>
+                    <button type="button" id="confirmAdding">Add Product</button>
+                    <button type="button" id="cancelAdding">Cancel</button>
                 </div>
             </div>
         </div>
@@ -328,7 +328,7 @@ function showLowStockDetails() {
                     <div class="popupWindow">
                         <h2>Low Stock</h2>
                         ${lowStockDetails}
-                        <button id="cancelPopup">Close</button>
+                        <button type="button" id="cancelPopup">Close</button>
                     </div>    
                 </div>
             `;
@@ -416,8 +416,8 @@ function searchBox(type){
                     <input id="searchInput" type="text" placeholder="Search Products" />
                 </div>
                 <div>
-                    <button id="searchButton">Search</button>
-                    <button id="cancelPopup">Cancel</button>
+                    <button type="button" id="searchButton">Search</button>
+                    <button type="button" id="cancelPopup">Cancel</button>
                 </div>
             </div>
         </div>
@@ -461,8 +461,8 @@ function filterBox(){
                 </select>
             </div>
             <div>
-                <button id="searchAvailabilityButton">Search</button>
-                <button id="cancelAvailabilityPopup">Cancel</button>
+                <button type="button" id="searchAvailabilityButton">Search</button>
+                <button type="button" id="cancelAvailabilityPopup">Cancel</button>
             </div>
         </div>
    </div>`
