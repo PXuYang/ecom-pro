@@ -4,55 +4,42 @@ let currentPage = 0;
 let size = 2;
 let totalPages = 0;
 
-let currentMode = "normal";
-let currentKeyword = "";
+let currentName = "";
+let currentBrand = "";
+let currentCategory = "";
 let currentAvailability = "";
+let currentSortBy = "";
+let currentSortOrder = "";
+let currentLowStock = "";
 
 function loadProductsByPage(page) {
-    let url = "";
+    document.getElementById("products").innerText = "Loading products...";
 
-    if (currentMode === "normal") {
-        url = "http://localhost:8080/api/products/page?page=" + page + "&size=" + size;
+    let url = "http://localhost:8080/api/products/findProducts/page?page=" + page + "&size=" + size;
+
+    if (currentName !== "") {
+        url += "&name=" + encodeURIComponent(currentName);
     }
 
-    if (currentMode === "byCategory") {
-        url = "http://localhost:8080/api/products/bycategory/" + encodeURIComponent(currentKeyword) + "/page?page=" + page + "&size=" + size;
+    if (currentCategory !== "") {
+        url += "&category=" + encodeURIComponent(currentCategory);
     }
 
-    if(currentMode === "byName"){
-        url = "http://localhost:8080/api/products/byname/" + encodeURIComponent(currentKeyword) + "/page?page=" + page + "&size=" + size;
+    if(currentBrand !== ""){
+        url += "&brand=" + encodeURIComponent(currentBrand);
     }
 
-    if(currentMode === "byBrand"){
-        url = "http://localhost:8080/api/products/bybrand/" + encodeURIComponent(currentKeyword) + "/page?page=" + page + "&size=" + size;
+    if(currentAvailability !== ""){
+        url += "&availability=" + currentAvailability;
     }
 
-    if(currentMode === "byAvailability"){
-        url = "http://localhost:8080/api/products/byavailability/" + currentAvailability + "/page?page=" + page + "&size=" + size;
+    if(currentLowStock !== ""){
+        url += "&lowStock=" + currentLowStock;
     }
 
-    if(currentMode === "lowStock"){
-        url = "http://localhost:8080/api/products/low-stock/page?page=" + page + "&size=" + size;
-    }
-
-    if(currentMode === "asc"){
-        url = "http://localhost:8080/api/products/asc/page?page=" + page + "&size=" + size;
-    }
-
-    if(currentMode === "priceAsc"){
-        url = "http://localhost:8080/api/products/price/asc/page?page=" + page + "&size=" + size;
-    }
-
-    if(currentMode === "priceDesc"){
-        url = "http://localhost:8080/api/products/price/desc/page?page=" + page + "&size=" + size;
-    }
-
-    if(currentMode === "quantityAsc"){
-        url = "http://localhost:8080/api/products/quantity/asc/page?page=" + page + "&size=" + size;
-    }
-
-    if(currentMode === "quantityDesc"){
-        url = "http://localhost:8080/api/products/quantity/desc/page?page=" + page + "&size=" + size;
+    if(currentSortBy !== ""){
+        url += "&sortBy=" + currentSortBy;
+        url += "&sortOrder=" + currentSortOrder;
     }
 
     fetch(url)
@@ -139,12 +126,6 @@ function displayProducts(products) {
             `;
     }
     document.getElementById("products").innerHTML = html;
-}
-
-function loadProduct(){
-
-    document.getElementById("products").innerText = "Loading products...";
-    loadProductsByPage(currentPage);
 }
 
 function showProductStat(){
@@ -302,7 +283,7 @@ function showLowStockDetails() {
 
     let lowStockDetails = "";
 
-    fetch("http://localhost:8080/api/products/low-stock/page?page=0&size=1000")
+    fetch("http://localhost:8080/api/products/findProducts/page?page=0&size=1000&lowStock=true")
     .then(response => response.json())
         .then(pageData => {
 
@@ -344,66 +325,80 @@ function showLowStockDetails() {
 }
 
 function findByCategory(categoryKeyword) {
-    currentMode = "byCategory";
-    currentKeyword = categoryKeyword;
+    currentCategory = categoryKeyword;
     currentPage = 0;
     loadProductsByPage(currentPage);
 }
 
 function findByName(nameKeyword) {
-    currentMode = "byName";
-    currentKeyword = nameKeyword;
+    currentName = nameKeyword;
     currentPage = 0;
     loadProductsByPage(currentPage);
 }
 
 function findByBrand(brandKeyword) {
-    currentMode = "byBrand";
-    currentKeyword = brandKeyword;
+    currentBrand = brandKeyword;
     currentPage = 0;
     loadProductsByPage(currentPage);
 }
 
 function filterByAvailability(availability) {
-    currentMode = "byAvailability";
     currentAvailability = availability;
     currentPage = 0;
     loadProductsByPage(currentPage);
 }
 
 function filterLowStock(){
-    currentMode = "lowStock";
+    currentLowStock = "true";
     currentPage = 0;
     loadProductsByPage(currentPage);
 }
 
 function sortByName(){
-    currentMode = "asc";
+    currentSortBy = "name";
+    currentSortOrder = "asc";
     currentPage = 0;
     loadProductsByPage(currentPage);
 }
 
 function sortByPriceAsc() {
-    currentMode = "priceAsc";
+    currentSortBy = "price";
+    currentSortOrder = "asc";
     currentPage = 0;
     loadProductsByPage(currentPage);
 }
 
 function sortByPriceDesc(){
-    currentMode = "priceDesc";
+    currentSortBy = "price";
+    currentSortOrder = "desc";
     currentPage = 0;
     loadProductsByPage(currentPage);
 }
 
 function sortByQuantityAsc(){
-    currentMode = "quantityAsc";
+    currentSortBy = "quantity";
+    currentSortOrder = "asc";
     currentPage = 0;
     loadProductsByPage(currentPage);
 }
 
 function sortByQuantityDesc(){
-    currentMode = "quantityDesc";
+    currentSortBy = "quantity";
+    currentSortOrder = "desc";
     currentPage = 0;
+    loadProductsByPage(currentPage);
+}
+
+function clearSearch(){
+    currentName = "";
+    currentBrand = "";
+    currentCategory = "";
+    currentAvailability = "";
+    currentLowStock = "";
+    currentSortBy = "";
+    currentSortOrder = "";
+    currentPage = 0;
+
     loadProductsByPage(currentPage);
 }
 
@@ -485,11 +480,7 @@ function filterBox(){
 }
 
 function refreshPage(){
-    currentMode = "normal";
-    currentKeyword = "";
-    currentAvailability = "";
-    currentPage = 0;
-    loadProduct();
+    clearSearch();
     showProductStat();
 }
 

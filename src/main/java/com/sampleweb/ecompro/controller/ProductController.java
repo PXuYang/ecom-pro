@@ -11,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
@@ -31,9 +29,20 @@ public class ProductController {
         return "Hello, welcome to the home page";
     }
 
-    @GetMapping("/products")
-    public ResponseEntity<List<ProductResponse>> getAllProducts(){
-        List<ProductResponse> products = service.getAllProducts();
+    @GetMapping("products/findProducts/page")
+    public ResponseEntity<Page<ProductResponse>> findProducts(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) Boolean availability,
+            @RequestParam(required = false) Boolean lowStock,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false) String sortOrder,
+            @RequestParam int page,
+            @RequestParam int size
+    ){
+
+        Page<ProductResponse> products = service.findProducts(name, brand, category, availability, lowStock, sortBy, sortOrder, page, size);
         return ResponseEntity.ok(products);
     }
 
@@ -52,9 +61,6 @@ public class ProductController {
     @PutMapping("/products/{id}")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable int id, @Valid @RequestBody ProductRequest newPro){
         ProductResponse pro = service.updateProduct(id, newPro);
-//        if(pro == null){
-//            return ResponseEntity.notFound().build();
-//        }
         return ResponseEntity.ok(pro);
     }
 
@@ -71,98 +77,6 @@ public class ProductController {
     public ResponseEntity<ProductStatResponse> getProductsStat(){
         ProductStatResponse productStatResponse = service.getStatData();
         return ResponseEntity.ok(productStatResponse);
-    }
-
-    @GetMapping("/products/page")
-    public ResponseEntity<Page<ProductResponse>> getProductsByPage(
-            @RequestParam int page, @RequestParam int size){
-
-        Page<ProductResponse> pageProducts = service.getProductByPage(page, size);
-        return ResponseEntity.ok(pageProducts);
-    }
-
-    @GetMapping("/products/asc/page")
-    public ResponseEntity<Page<ProductResponse>> findAllByOrderByNameAsc(
-            @RequestParam int page, @RequestParam int size){
-
-        Page<ProductResponse> products = service.findAllByOrderByNameAsc(page, size);
-        return ResponseEntity.ok(products);
-    }
-
-    @GetMapping("/products/price/asc/page")
-    public ResponseEntity<Page<ProductResponse>> findAllByOrderByPriceAsc(
-            @RequestParam int page, @RequestParam int size){
-
-        Page<ProductResponse> products = service.findAllByOrderByPriceAsc(page, size);
-        return ResponseEntity.ok(products);
-    }
-
-    @GetMapping("/products/price/desc/page")
-    public ResponseEntity<Page<ProductResponse>> findAllByOrderByPriceDesc(
-            @RequestParam int page, @RequestParam int size){
-
-        Page<ProductResponse> products = service.findAllByOrderByPriceDesc(page, size);
-        return ResponseEntity.ok(products);
-    }
-
-    @GetMapping("/products/quantity/asc/page")
-    public ResponseEntity<Page<ProductResponse>> findAllByOrderByQuantityAsc(
-            @RequestParam int page, @RequestParam int size){
-
-        Page<ProductResponse> products = service.findAllByOrderByQuantityAsc(page, size);
-        return ResponseEntity.ok(products);
-    }
-
-    @GetMapping("/products/quantity/desc/page")
-    public ResponseEntity<Page<ProductResponse>> findAllByOrderByQuantityDesc(
-            @RequestParam int page, @RequestParam int size){
-
-        Page<ProductResponse> products = service.findAllByOrderByQuantityDesc(page, size);
-        return ResponseEntity.ok(products);
-    }
-
-    @GetMapping("/products/low-stock/page")
-    public ResponseEntity<Page<ProductResponse>> getLowStock(
-            @RequestParam int page, @RequestParam int size){
-
-        Page<ProductResponse> lowStock = service.findByQuantityLessThan(page, size);
-        return ResponseEntity.ok(lowStock);
-    }
-
-    @GetMapping("/products/bycategory/{categoryKeyword}/page")
-    public ResponseEntity<Page<ProductResponse>> findByCategoryContainingIgnoreCase(
-            @PathVariable String categoryKeyword,
-            @RequestParam int page, @RequestParam int size){
-
-        Page<ProductResponse> byCategory = service.findByCategoryContainingIgnoreCase(categoryKeyword, page, size);
-        return ResponseEntity.ok(byCategory);
-    }
-
-    @GetMapping("/products/byname/{nameKeyword}/page")
-    public ResponseEntity<Page<ProductResponse>> findByNameContainingIgnoreCase(
-            @PathVariable String nameKeyword,
-            @RequestParam int page, @RequestParam int size){
-
-        Page<ProductResponse> byName = service.findByNameContainingIgnoreCase(nameKeyword, page, size);
-        return ResponseEntity.ok(byName);
-    }
-
-    @GetMapping("/products/byavailability/{availability}/page")
-    public ResponseEntity<Page<ProductResponse>> findByAvailability(
-            @PathVariable boolean availability,
-            @RequestParam int page, @RequestParam int size){
-
-        Page<ProductResponse> byAvailability = service.findByAvailability(availability, page, size);
-        return ResponseEntity.ok(byAvailability);
-    }
-
-    @GetMapping("/products/bybrand/{brandKeyword}/page")
-    public ResponseEntity<Page<ProductResponse>> findByBrandContainingIgnoreCase(
-            @PathVariable String brandKeyword,
-            @RequestParam int page, @RequestParam int size){
-
-        Page<ProductResponse> byBrand = service.findByBrandContainingIgnoreCase(brandKeyword, page, size);
-        return ResponseEntity.ok(byBrand);
     }
 
 }

@@ -10,21 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ProductService {
 
     @Autowired
     private ProductRepo repo;
-
-    public Page<ProductResponse> getProductByPage(int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-
-        return repo.findAll(pageable).map(this::toResponse);
-    }
 
     private ProductResponse toResponse(Product pro){
         ProductResponse newPro = new ProductResponse();
@@ -41,10 +35,6 @@ public class ProductService {
         newPro.setQuantity(pro.getQuantity());
 
         return newPro;
-    }
-
-    public List<ProductResponse> getAllProducts(){
-        return repo.findAll().stream().map(this::toResponse).toList();
     }
 
     public ProductResponse getProductById(Integer id){
@@ -110,54 +100,23 @@ public class ProductService {
         return productStatResponse;
     }
 
-    public Page<ProductResponse> findByQuantityLessThan(int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-        return repo.findByQuantityLessThan(10, pageable).map(this::toResponse);
-    }
+    public Page<ProductResponse> findProducts(String name, String brand, String category, Boolean availability, Boolean lowStock,
+                                              String sortBy, String sortOrder, int page, int size){
+        Sort sort = Sort.unsorted();
+        if(sortBy != null && !sortBy.isBlank()){
+            if(sortBy.equalsIgnoreCase("name")){
+                sort = JpaSort.unsafe("LOWER(name)").ascending();
+            } else{
+                if(sortOrder != null && sortOrder.equalsIgnoreCase("desc")){
+                    sort = Sort.by(sortBy).descending();
+                } else{
+                    sort = Sort.by(sortBy).ascending();
+                }
+            }
+        }
 
-    public Page<ProductResponse> findByCategoryContainingIgnoreCase(String categoryKeyword, int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-        return repo.findByCategoryContainingIgnoreCase(categoryKeyword, pageable).map(this::toResponse);
-    }
-
-    public Page<ProductResponse> findByNameContainingIgnoreCase(String nameKeyword, int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-        return repo.findByNameContainingIgnoreCase(nameKeyword, pageable).map(this::toResponse);
-    }
-
-    public Page<ProductResponse> findByAvailability(boolean availability, int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-        return repo.findByAvailability(availability, pageable).map(this::toResponse);
-    }
-
-    public Page<ProductResponse> findByBrandContainingIgnoreCase(String brandKeyword, int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-        return repo.findByBrandContainingIgnoreCase(brandKeyword, pageable).map(this::toResponse);
-    }
-
-    public Page<ProductResponse> findAllByOrderByNameAsc(int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-        return repo.findAllByOrderByNameAsc(pageable).map(this::toResponse);
-    }
-
-    public Page<ProductResponse> findAllByOrderByPriceAsc(int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-        return repo.findAllByOrderByPriceAsc(pageable).map(this::toResponse);
-    }
-
-    public Page<ProductResponse> findAllByOrderByPriceDesc(int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-        return repo.findAllByOrderByPriceDesc(pageable).map(this::toResponse);
-    }
-
-    public Page<ProductResponse> findAllByOrderByQuantityAsc(int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-        return repo.findAllByOrderByQuantityAsc(pageable).map(this::toResponse);
-    }
-
-    public Page<ProductResponse> findAllByOrderByQuantityDesc(int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-        return repo.findAllByOrderByQuantityDesc(pageable).map(this::toResponse);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return repo.findProducts(name, brand, category, availability, lowStock, pageable).map(this::toResponse);
     }
 
 }
