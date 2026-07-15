@@ -19,17 +19,7 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
-    @RequestMapping
-    public String homePage(){
-        return "Welcome to my first project";
-    }
-
-    @RequestMapping("/homepage")
-    public String greet(){
-        return "Hello, welcome to the home page";
-    }
-
-    @GetMapping("products/findProducts/page")
+    @GetMapping("/products/findProducts/page")
     public ResponseEntity<Page<ProductResponse>> findProducts(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String brand,

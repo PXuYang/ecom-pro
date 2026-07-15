@@ -1,7 +1,7 @@
 const defaultImageUrl = "No-Image-Found-400x264.png";
 
 let currentPage = 0;
-let size = 2;
+let size = 3;
 let totalPages = 0;
 
 let currentName = "";
