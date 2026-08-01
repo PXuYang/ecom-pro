@@ -42,8 +42,7 @@ public class ImageController {
     public ResponseEntity<Resource> getImage(@PathVariable String fileName)
             throws IOException{
 
-        Path uploadPath = Paths.get("uploads");
-        Path imagePath = uploadPath.resolve(fileName);
+        Path imagePath = Paths.get("uploads").resolve(fileName);
         String resourceType = Files.probeContentType(imagePath);
         MediaType mediaType = MediaType.parseMediaType(resourceType);
 
