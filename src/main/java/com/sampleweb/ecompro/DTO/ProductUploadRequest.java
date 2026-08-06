@@ -5,11 +5,13 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
 @Data
-public class ProductRequest {
+public class ProductUploadRequest {
 
     @NotBlank(message = "Product name is required")
     private String name;
@@ -22,8 +24,9 @@ public class ProductRequest {
     @NotBlank(message = "Product category is required")
     private String category;
     @NotNull(message = "Product release date is required")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date releaseDate;
-    private String imageUrl;
+    private MultipartFile image;
     private boolean availability;
     @PositiveOrZero(message = "Product quantity must be positive or zero")
     private int quantity;

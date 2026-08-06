@@ -25,10 +25,13 @@ function loadProductById(id){
 
 function displayProductDetail(product) {
 
+    let imageUrl = product.imageUrl ?
+        "http://localhost:8080/api/images/" + product.imageUrl : defaultImageUrl;
+
     document.getElementById("productDetail").innerHTML = `
                 <div class="product-detail-card">
 
-                    <img src="${product.imageUrl || defaultImageUrl}" 
+                    <img src="${imageUrl}" 
                         alt="${product.name}" 
                         class="detailImage"
                         onerror="this.src='${defaultImageUrl}'">
@@ -58,7 +61,7 @@ function deleteProduct(id){
         return;
     }
 
-    fetch("http://localhost:8080/api/products/" + id, {
+    fetch("http://localhost:8080/api/products/delete/" + id, {
         method: "DELETE",
     })
         .then(() => {
@@ -111,8 +114,8 @@ function updateProduct(id){
                         <input id="updateReleaseDateInput" type="date" value="${currentProduct.releaseDate}">
                     </div>
                     <div class="popupFormRow">
-                        <label for="updateImageUrlInput">Image URL: </label>
-                        <input id="updateImageUrlInput" type="text" value="${currentProduct.imageUrl || ""}">
+                        <label for="updateImageInput">Image: </label>
+                        <input id="updateImageInput" type="file"">
                     </div>
                     <div class="popupFormRow">
                         <label for="updateQuantityInput">Quantity: </label>
@@ -147,7 +150,7 @@ function updateProduct(id){
         let price = document.getElementById("updatePriceInput").value;
         let category = document.getElementById("updateCategoryInput").value;
         let releaseDate = document.getElementById("updateReleaseDateInput").value;
-        let imageUrl = document.getElementById("updateImageUrlInput").value;
+        let image = document.getElementById("updateImageInput").files[0];
         let availability = document.getElementById("updateAvailabilityInput").value;
         let quantity = document.getElementById("updateQuantityInput").value;
 
@@ -178,26 +181,27 @@ function updateProduct(id){
             return;
         }
 
-        let product = {
-            name: name,
-            description: desc,
-            brand: brand,
-            price: Number(price),
-            category: category,
-            releaseDate: releaseDate,
-            imageUrl: imageUrl,
-            availability: availability === "true",
-            quantity: Number(quantity),
-        };
+        let product = new FormData();
+        if(image){
+            product.append("image", image)
+        }
+            product.append("name", name),
+            product.append("description", desc),
+            product.append("brand", brand),
+            product.append("price", Number(price)),
+            product.append("category", category),
+            product.append("releaseDate", releaseDate),
+            product.append("availability", availability),
+            product.append("quantity", Number(quantity));
 
-        console.log("Updated product: ", product);
+        console.log("Updated product:");
+        for(let pair of product.entries()) {
+            console.log(pair[0],pair[1]);
+        }
 
-        fetch("http://localhost:8080/api/products/" + id, {
+        fetch("http://localhost:8080/api/products/update/" + id + "/with-image", {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(product),
+            body: product,
         })
             .then(response => {
                 if (!response.ok) {

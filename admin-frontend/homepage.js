@@ -113,10 +113,13 @@ function displayProducts(products) {
     for (let i = 0; i < products.length; i++) {
         let product = products[i];
 
+        let imageUrl = product.imageUrl ?
+            "http://localhost:8080/api/images/" + product.imageUrl : defaultImageUrl;
+
         html += `
                 <div class="product-card" onclick="goToProductDetail(${product.id})">
                     <h2>${product.name}</h2>
-                    <img src="${product.imageUrl || defaultImageUrl}" 
+                    <img src="${imageUrl}" 
                     alt="${product.name}" 
                     class="productImage"
                     onerror="this.src='${defaultImageUrl}'">
@@ -170,12 +173,12 @@ function addProduct(){
                     <input id="categoryInput" placeholder="Category">
                 </div>
                 <div class="popupFormRow">
-                    <label for="releaseDateInput">Release Date:</label>
+                    <label for="releaseDateInput">Release Date: </label>
                     <input id="releaseDateInput" type="date">
                 </div>
                 <div class="popupFormRow">
-                    <label for="imageUrlInput">Image URL: </label>
-                    <input id="imageUrlInput" type="text">
+                    <label for="imageInput">Image: </label>
+                    <input id="imageInput" type="file" accept="image/*">
                 </div>
                 <div class="popupFormRow">
                     <label for="quantityInput">Quantity: </label>
@@ -208,7 +211,7 @@ function addProduct(){
         let price = document.getElementById("priceInput").value;
         let category = document.getElementById("categoryInput").value;
         let releaseDate = document.getElementById("releaseDateInput").value;
-        let imageUrl = document.getElementById("imageUrlInput").value;
+        let image = document.getElementById("imageInput").files[0];
         let availability = document.getElementById("availabilityInput").value;
         let quantity = document.getElementById("quantityInput").value;
 
@@ -220,6 +223,11 @@ function addProduct(){
 
         if(price === "" || isNaN(Number(price))){
             alert("Price must be number!");
+            return;
+        }
+
+        if(!image){
+            alert("Please enter a valid image!");
             return;
         }
 
@@ -239,26 +247,24 @@ function addProduct(){
             return;
         }
 
-        let product = {
-            name: name,
-            description: desc,
-            brand: brand,
-            price: Number(price),
-            category: category,
-            releaseDate: releaseDate,
-            imageUrl: imageUrl,
-            availability: availability === "true",
-            quantity: Number(quantity),
-        };
+        let product = new FormData();
+        product.append("name", name),
+        product.append("description", desc),
+        product.append("brand", brand),
+        product.append("price", Number(price)),
+        product.append("category", category),
+        product.append("releaseDate", releaseDate),
+        product.append("image", image),
+        product.append("availability", availability),
+        product.append("quantity", Number(quantity));
 
-        console.log(product);
+        for(let pair of product.entries()) {
+            console.log(pair[0],pair[1]);
+        }
 
-        fetch("http://localhost:8080/api/products", {
+        fetch("http://localhost:8080/api/products/with-image", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(product),
+            body: product,
         })
             .then(response => {
                 if (!response.ok) {

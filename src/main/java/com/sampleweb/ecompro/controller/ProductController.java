@@ -1,15 +1,18 @@
 package com.sampleweb.ecompro.controller;
 
 import com.sampleweb.ecompro.DTO.ProductResponse;
-import com.sampleweb.ecompro.DTO.ProductRequest;
 import com.sampleweb.ecompro.DTO.ProductStatResponse;
+import com.sampleweb.ecompro.DTO.ProductUploadRequest;
 import com.sampleweb.ecompro.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
@@ -42,19 +45,23 @@ public class ProductController {
         return ResponseEntity.ok(pro);
     }
 
-    @PostMapping("/products")
-    public ResponseEntity<ProductResponse> addProduct(@Valid @RequestBody ProductRequest newPro){
-        ProductResponse pro = service.addProduct(newPro);
+    @PostMapping(value = "/products/with-image",
+                consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ProductResponse> addProductWithImage(@Valid @ModelAttribute ProductUploadRequest newPro)
+            throws IOException {
+        ProductResponse pro = service.addProductWithImage(newPro);
         return ResponseEntity.status(HttpStatus.CREATED).body(pro);
     }
 
-    @PutMapping("/products/{id}")
-    public ResponseEntity<ProductResponse> updateProduct(@PathVariable int id, @Valid @RequestBody ProductRequest newPro){
+    @PutMapping(value = "/products/update/{id}/with-image",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable int id, @Valid @ModelAttribute ProductUploadRequest newPro)
+            throws IOException {
         ProductResponse pro = service.updateProduct(id, newPro);
         return ResponseEntity.ok(pro);
     }
 
-    @DeleteMapping("/products/{id}")
+    @DeleteMapping("/products/delete/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable int id){
         boolean pro = service.deleteProduct(id);
         if(!pro){
