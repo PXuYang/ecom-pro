@@ -24,6 +24,7 @@ public class ImageController {
         Path uploadPath = Paths.get("uploads");
 
         String fileName = file.getOriginalFilename();
+        assert fileName != null;
         String extension = fileName.substring(fileName.lastIndexOf("."));
 
         String uuid = UUID.randomUUID().toString();
@@ -43,12 +44,18 @@ public class ImageController {
             throws IOException{
 
         Path imagePath = Paths.get("uploads").resolve(fileName);
-        String resourceType = Files.probeContentType(imagePath);
-        MediaType mediaType = MediaType.parseMediaType(resourceType);
 
         if(!Files.exists(imagePath)){
             return ResponseEntity.notFound().build();
         }
+
+        String resourceType = Files.probeContentType(imagePath);
+
+        if(resourceType == null){
+            resourceType = "application/octet-stream";
+        }
+
+        MediaType mediaType = MediaType.parseMediaType(resourceType);
 
         Resource resource = new UrlResource(imagePath.toUri());
 
