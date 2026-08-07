@@ -29,7 +29,7 @@ public class ProductResponse {
     private String category;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
     private Date releaseDate;
-    private String imageUrl;
+    private String imageName;
     private boolean availability;
     private int quantity;
 

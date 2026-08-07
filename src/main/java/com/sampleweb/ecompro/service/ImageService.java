@@ -1,6 +1,7 @@
 package com.sampleweb.ecompro.service;
 
 import com.sampleweb.ecompro.DTO.ImageResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
@@ -16,7 +17,11 @@ import java.util.UUID;
 @Service
 public class ImageService {
 
-    private final Path UPLOADPATH = Paths.get("uploads");
+    private final Path UPLOADPATH;
+
+    public ImageService( @Value("${file.upload-dir}") String uploads){
+        this.UPLOADPATH = Paths.get(uploads);
+    }
 
     public String uploadImage(MultipartFile file)
             throws IOException {

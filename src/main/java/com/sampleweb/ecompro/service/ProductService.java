@@ -38,7 +38,7 @@ public class ProductService {
         newPro.setPrice(pro.getPrice());
         newPro.setCategory(pro.getCategory());
         newPro.setReleaseDate(pro.getReleaseDate());
-        newPro.setImageUrl(pro.getImageUrl());
+        newPro.setImageName(pro.getImageName());
         newPro.setAvailability(pro.isAvailability());
         newPro.setQuantity(pro.getQuantity());
 
@@ -68,7 +68,7 @@ public class ProductService {
         product.setPrice(newPro.getPrice());
         product.setCategory(newPro.getCategory());
         product.setReleaseDate(newPro.getReleaseDate());
-        product.setImageUrl(imageName);
+        product.setImageName(imageName);
         product.setAvailability(newPro.isAvailability());
         product.setQuantity(newPro.getQuantity());
 
@@ -88,7 +88,7 @@ public class ProductService {
         oldPro.setCategory(newPro.getCategory());
         oldPro.setReleaseDate(newPro.getReleaseDate());
         if (image != null && !image.isEmpty()){
-            oldPro.setImageUrl(imageService.uploadImage(image));
+            oldPro.setImageName(imageService.uploadImage(image));
         }
         oldPro.setAvailability(newPro.isAvailability());
         oldPro.setQuantity(newPro.getQuantity());

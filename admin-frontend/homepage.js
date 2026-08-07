@@ -1,4 +1,4 @@
-const defaultImageUrl = "No-Image-Found-400x264.png";
+const defaultImageName = "No-Image-Found-400x264.png";
 
 let currentPage = 0;
 let size = 3;
@@ -113,8 +113,8 @@ function displayProducts(products) {
     for (let i = 0; i < products.length; i++) {
         let product = products[i];
 
-        let imageUrl = product.imageUrl ?
-            "http://localhost:8080/api/images/" + product.imageUrl : defaultImageUrl;
+        let imageUrl = product.imageName ?
+            "http://localhost:8080/api/images/" + product.imageName : defaultImageName;
 
         html += `
                 <div class="product-card" onclick="goToProductDetail(${product.id})">
@@ -122,7 +122,7 @@ function displayProducts(products) {
                     <img src="${imageUrl}" 
                     alt="${product.name}" 
                     class="productImage"
-                    onerror="this.src='${defaultImageUrl}'">
+                    onerror="this.src='${defaultImageName}'">
                     <p>Price: $${product.price}</p>
                     <p>Availability: ${product.availability? "Yes" : "No"}</p>
                 </div>

@@ -1,4 +1,4 @@
-const defaultImageUrl = "No-Image-Found-400x264.png";
+const defaultImageName = "No-Image-Found-400x264.png";
 
 const param = new URLSearchParams(window.location.search);
 const id = param.get("id");
@@ -25,8 +25,8 @@ function loadProductById(id){
 
 function displayProductDetail(product) {
 
-    let imageUrl = product.imageUrl ?
-        "http://localhost:8080/api/images/" + product.imageUrl : defaultImageUrl;
+    let imageUrl = product.imageName ?
+        "http://localhost:8080/api/images/" + product.imageName : defaultImageName;
 
     document.getElementById("productDetail").innerHTML = `
                 <div class="product-detail-card">
@@ -34,7 +34,7 @@ function displayProductDetail(product) {
                     <img src="${imageUrl}" 
                         alt="${product.name}" 
                         class="detailImage"
-                        onerror="this.src='${defaultImageUrl}'">
+                        onerror="this.src='${defaultImageName}'">
                         
                     <div class="product-detail-info">
                         <h2>${product.name}</h2>

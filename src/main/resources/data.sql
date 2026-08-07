@@ -1,4 +1,4 @@
-INSERT INTO Product(name, description, brand, price, category, release_date, image_url, availability, quantity)
+INSERT INTO Product(name, description, brand, price, category, release_date, image_Name, availability, quantity)
 VALUES
     ('iPhone17', 'Smartphone', 'Apple', 999.99, 'Phone', '2025-09-06', '4c78ee21-6950-4a6b-a7ad-4f435cf4b088.webp',True, 100),
     ('AirPods Pro', 'Earphone', 'Apple', 299.99, 'EarPhone', '2025-09-06', 'dcf0e8b5-f02b-445f-9899-a2583435b174.jpeg',True, 50),
