@@ -1,5 +1,6 @@
 package com.sampleweb.ecompro.service;
 
+import com.sampleweb.ecompro.DTO.PageResponse;
 import com.sampleweb.ecompro.DTO.ProductResponse;
 import com.sampleweb.ecompro.DTO.ProductStatResponse;
 import com.sampleweb.ecompro.DTO.ProductUploadRequest;
@@ -22,10 +23,12 @@ public class ProductService {
 
     private final ProductRepo repo;
     private final ImageService imageService;
+    private final PageService pageService;
 
-    public ProductService(ProductRepo repo, ImageService imageService){
+    public ProductService(ProductRepo repo, ImageService imageService, PageService pageService){
         this.repo = repo;
         this.imageService = imageService;
+        this.pageService = pageService;
     }
 
     private ProductResponse toResponse(Product pro){
@@ -123,8 +126,9 @@ public class ProductService {
         return productStatResponse;
     }
 
-    public Page<ProductResponse> findProducts(String name, String brand, String category, Boolean availability, Boolean lowStock,
+    public PageResponse<ProductResponse> findProducts(String name, String brand, String category, Boolean availability, Boolean lowStock,
                                               String sortBy, String sortOrder, int page, int size){
+
         Sort sort = Sort.unsorted();
         if(sortBy != null && !sortBy.isBlank()){
             if(sortBy.equalsIgnoreCase("name")){
@@ -139,7 +143,9 @@ public class ProductService {
         }
 
         Pageable pageable = PageRequest.of(page, size, sort);
-        return repo.findProducts(name, brand, category, availability, lowStock, pageable).map(this::toResponse);
+        Page<ProductResponse> products = repo.findProducts(name, brand, category, availability, lowStock, pageable).map(this::toResponse);
+
+        return pageService.toResponse(products);
     }
 
 }

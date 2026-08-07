@@ -51,7 +51,7 @@ function loadProductsByPage(page) {
         })
         .then(pageData => {
             console.log("Loaded page data: ", pageData);
-            currentPage = pageData.number;
+            currentPage = pageData.page;
             totalPages = pageData.totalPages;
 
             displayProducts(pageData.content);
@@ -72,7 +72,7 @@ function displayPaginationButtons(pageData) {
 
         for (let i = 0; i < pageData.totalPages; i++) {
             html += `
-            <button type="button" onclick="goToPage(${i})" ${pageData.number === i ? "disabled" : ""}>
+            <button type="button" onclick="goToPage(${i})" ${pageData.page === i ? "disabled" : ""}>
             ${i + 1}
             </button>
             `;

@@ -1,12 +1,12 @@
 package com.sampleweb.ecompro.controller;
 
+import com.sampleweb.ecompro.DTO.PageResponse;
 import com.sampleweb.ecompro.DTO.ProductResponse;
 import com.sampleweb.ecompro.DTO.ProductStatResponse;
 import com.sampleweb.ecompro.DTO.ProductUploadRequest;
 import com.sampleweb.ecompro.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping("/products/findProducts/page")
-    public ResponseEntity<Page<ProductResponse>> findProducts(
+    public ResponseEntity<PageResponse<ProductResponse>> findProducts(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String brand,
             @RequestParam(required = false) String category,
@@ -35,7 +35,7 @@ public class ProductController {
             @RequestParam int size
     ){
 
-        Page<ProductResponse> products = service.findProducts(name, brand, category, availability, lowStock, sortBy, sortOrder, page, size);
+        PageResponse<ProductResponse> products = service.findProducts(name, brand, category, availability, lowStock, sortBy, sortOrder, page, size);
         return ResponseEntity.ok(products);
     }
 
