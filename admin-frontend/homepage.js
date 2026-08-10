@@ -1,4 +1,5 @@
 const defaultImageName = "No-Image-Found-400x264.png";
+const BASE_URL = "http://localhost:8080/api/";
 
 let currentPage = 0;
 let size = 3;
@@ -15,7 +16,7 @@ let currentLowStock = "";
 function loadProductsByPage(page) {
     document.getElementById("products").innerText = "Loading products...";
 
-    let url = "http://localhost:8080/api/products/findProducts/page?page=" + page + "&size=" + size;
+    let url = BASE_URL + "products/findProducts/page?page=" + page + "&size=" + size;
 
     if (currentName !== "") {
         url += "&name=" + encodeURIComponent(currentName);
@@ -114,7 +115,7 @@ function displayProducts(products) {
         let product = products[i];
 
         let imageUrl = product.imageName ?
-            "http://localhost:8080/api/images/" + product.imageName : defaultImageName;
+            BASE_URL + "images/" + product.imageName : defaultImageName;
 
         html += `
                 <div class="product-card" onclick="goToProductDetail(${product.id})">
@@ -133,7 +134,7 @@ function displayProducts(products) {
 
 function showProductStat(){
 
-    fetch("http://localhost:8080/api/products/stat")
+    fetch(BASE_URL + "products/stat")
     .then(response => response.json())
     .then(stats => {
         document.getElementById("totalProCount").innerText = stats.totalProductCount;
@@ -248,21 +249,17 @@ function addProduct(){
         }
 
         let product = new FormData();
-        product.append("name", name),
-        product.append("description", desc),
-        product.append("brand", brand),
-        product.append("price", Number(price)),
-        product.append("category", category),
-        product.append("releaseDate", releaseDate),
-        product.append("image", image),
-        product.append("availability", availability),
+        product.append("name", name);
+        product.append("description", desc);
+        product.append("brand", brand);
+        product.append("price", Number(price));
+        product.append("category", category);
+        product.append("releaseDate", releaseDate);
+        product.append("image", image);
+        product.append("availability", availability);
         product.append("quantity", Number(quantity));
 
-        for(let pair of product.entries()) {
-            console.log(pair[0],pair[1]);
-        }
-
-        fetch("http://localhost:8080/api/products/with-image", {
+        fetch(BASE_URL + "products/with-image", {
             method: "POST",
             body: product,
         })
@@ -289,7 +286,7 @@ function showLowStockDetails() {
 
     let lowStockDetails = "";
 
-    fetch("http://localhost:8080/api/products/findProducts/page?page=0&size=1000&lowStock=true")
+    fetch(BASE_URL + "products/findProducts/page?page=0&size=1000&lowStock=true")
     .then(response => response.json())
         .then(pageData => {
 
@@ -330,69 +327,64 @@ function showLowStockDetails() {
         })
 }
 
-function findByCategory(categoryKeyword) {
-    currentCategory = categoryKeyword;
+function reloadFirstPage() {
     currentPage = 0;
     loadProductsByPage(currentPage);
+}
+
+function findByCategory(categoryKeyword) {
+    currentCategory = categoryKeyword;
+    reloadFirstPage();
 }
 
 function findByName(nameKeyword) {
     currentName = nameKeyword;
-    currentPage = 0;
-    loadProductsByPage(currentPage);
+    reloadFirstPage();
 }
 
 function findByBrand(brandKeyword) {
     currentBrand = brandKeyword;
-    currentPage = 0;
-    loadProductsByPage(currentPage);
+    reloadFirstPage();
 }
 
 function filterByAvailability(availability) {
     currentAvailability = availability;
-    currentPage = 0;
-    loadProductsByPage(currentPage);
+    reloadFirstPage();
 }
 
 function filterLowStock(){
     currentLowStock = "true";
-    currentPage = 0;
-    loadProductsByPage(currentPage);
+    reloadFirstPage();
 }
 
 function sortByName(){
     currentSortBy = "name";
     currentSortOrder = "asc";
-    currentPage = 0;
-    loadProductsByPage(currentPage);
+    reloadFirstPage();
 }
 
 function sortByPriceAsc() {
     currentSortBy = "price";
     currentSortOrder = "asc";
-    currentPage = 0;
-    loadProductsByPage(currentPage);
+    reloadFirstPage();
 }
 
 function sortByPriceDesc(){
     currentSortBy = "price";
     currentSortOrder = "desc";
-    currentPage = 0;
-    loadProductsByPage(currentPage);
+    reloadFirstPage();
 }
 
 function sortByQuantityAsc(){
     currentSortBy = "quantity";
     currentSortOrder = "asc";
-    currentPage = 0;
-    loadProductsByPage(currentPage);
+    reloadFirstPage();
 }
 
 function sortByQuantityDesc(){
     currentSortBy = "quantity";
     currentSortOrder = "desc";
-    currentPage = 0;
-    loadProductsByPage(currentPage);
+    reloadFirstPage();
 }
 
 function clearSearch(){
@@ -403,9 +395,8 @@ function clearSearch(){
     currentLowStock = "";
     currentSortBy = "";
     currentSortOrder = "";
-    currentPage = 0;
 
-    loadProductsByPage(currentPage);
+    reloadFirstPage();
 }
 
 function searchBox(type){
