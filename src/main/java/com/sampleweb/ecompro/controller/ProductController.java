@@ -16,7 +16,6 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin
 public class ProductController {
 
     @Autowired
