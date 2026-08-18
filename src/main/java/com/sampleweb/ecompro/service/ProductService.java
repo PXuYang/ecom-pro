@@ -21,12 +21,12 @@ import java.io.IOException;
 @Service
 public class ProductService {
 
-    private final ProductRepo repo;
+    private final ProductRepo productRepo;
     private final ImageService imageService;
     private final PageService pageService;
 
-    public ProductService(ProductRepo repo, ImageService imageService, PageService pageService){
-        this.repo = repo;
+    public ProductService(ProductRepo productRepo, ImageService imageService, PageService pageService){
+        this.productRepo = productRepo;
         this.imageService = imageService;
         this.pageService = pageService;
     }
@@ -49,7 +49,7 @@ public class ProductService {
     }
 
     public ProductResponse getProductById(Integer id){
-        Product pro = repo.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+        Product pro = productRepo.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
         return toResponse(pro);
     }
 
@@ -75,12 +75,12 @@ public class ProductService {
         product.setAvailability(newPro.isAvailability());
         product.setQuantity(newPro.getQuantity());
 
-        return toResponse(repo.save(product));
+        return toResponse(productRepo.save(product));
     }
 
     public ProductResponse updateProduct(Integer id, ProductUploadRequest newPro)
             throws IOException {
-        Product oldPro = repo.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+        Product oldPro = productRepo.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
 
         MultipartFile image = newPro.getImage();
 
@@ -100,14 +100,14 @@ public class ProductService {
             oldPro.setAvailability(false);
         }
 
-        return toResponse(repo.save(oldPro));
+        return toResponse(productRepo.save(oldPro));
     }
 
     public boolean deleteProduct(int id){
-        if(!repo.existsById(id)){
+        if(!productRepo.existsById(id)){
             return false;
         }
-        repo.deleteById(id);
+        productRepo.deleteById(id);
         return true;
     }
 
@@ -115,9 +115,9 @@ public class ProductService {
 
         ProductStatResponse productStatResponse = new ProductStatResponse();
 
-        long totalCount = repo.count();
-        long lowStockCount = repo.countByQuantityLessThan(10);
-        long categoryCount = repo.countByDistinctCategory();
+        long totalCount = productRepo.count();
+        long lowStockCount = productRepo.countByQuantityLessThan(10);
+        long categoryCount = productRepo.countByDistinctCategory();
 
         productStatResponse.setTotalProductCount((int)totalCount);
         productStatResponse.setLowStockCount((int)lowStockCount);
@@ -143,7 +143,7 @@ public class ProductService {
         }
 
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<ProductResponse> products = repo.findProducts(name, brand, category, availability, lowStock, pageable).map(this::toResponse);
+        Page<ProductResponse> products = productRepo.findProducts(name, brand, category, availability, lowStock, pageable).map(this::toResponse);
 
         return pageService.toResponse(products);
     }

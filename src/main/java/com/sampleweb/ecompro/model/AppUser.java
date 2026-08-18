@@ -18,11 +18,14 @@ public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer userId;
+
     @NotBlank
     private String userName;
+
     @NotBlank
     private String userPassword;
+
     @NotEmpty
     @ManyToMany
     @JoinTable(

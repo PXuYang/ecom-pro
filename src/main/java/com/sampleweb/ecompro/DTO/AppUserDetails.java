@@ -29,7 +29,7 @@ public class AppUserDetails implements UserDetails {
     @Override
     public @NonNull Collection<? extends GrantedAuthority> getAuthorities() {
         return appUser.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRoleName())).toList();
+                .map(role -> new SimpleGrantedAuthority(role.getRoleName().name())).toList();
     }
 
 }

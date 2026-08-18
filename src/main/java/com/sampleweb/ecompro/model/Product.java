@@ -24,21 +24,30 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @NotBlank(message = "Product name is required")
     private String name;
+
     @NotBlank(message = "Product description is required")
     private String description;
+
     @NotBlank(message = "Product brand is required")
     private String brand;
+
     @Positive(message = "Product price must be positive")
     private double price;
+
     @NotBlank(message = "Product category is required")
     private String category;
+
     @NotNull(message = "Product release date is required")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
     private Date releaseDate;
+
     private String imageName;
+
     private boolean availability;
+
     @PositiveOrZero(message = "Product quantity must be positive or zero")
     private int quantity;
 
