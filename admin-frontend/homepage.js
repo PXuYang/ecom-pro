@@ -156,34 +156,42 @@ function addProduct(){
                 <div class="popupFormRow">
                     <label for="nameInput">Name: </label>
                     <input id="nameInput" placeholder="Name">
+                    <span id="nameError" class="fieldError"></span>
                 </div>
                 <div class="popupFormRow">
                     <label for="descInput">Description: </label>
                     <input id="descInput" placeholder="Description">
+                    <span id="descError" class="fieldError"></span>
                 </div>
                 <div class="popupFormRow">
                     <label for="brandInput">Brand: </label>
                     <input id="brandInput" placeholder="Brand">
+                    <span id="brandError" class="fieldError"></span>
                 </div>
                 <div class="popupFormRow">
                     <label for="priceInput">Price: </label>
                     <input id="priceInput" type="number" placeholder="Price">
+                    <span id="priceError" class="fieldError"></span>
                 </div>
                 <div class="popupFormRow">
                     <label for="categoryInput">Category: </label>
                     <input id="categoryInput" placeholder="Category">
+                    <span id="categoryError" class="fieldError"></span>
                 </div>
                 <div class="popupFormRow">
                     <label for="releaseDateInput">Release Date: </label>
                     <input id="releaseDateInput" type="date">
+                    <span id="releaseDateError" class="fieldError"></span>
                 </div>
                 <div class="popupFormRow">
                     <label for="imageInput">Image: </label>
                     <input id="imageInput" type="file" accept="image/*">
+                    <span id="imageError" class="fieldError"></span>
                 </div>
                 <div class="popupFormRow">
                     <label for="quantityInput">Quantity: </label>
                     <input id="quantityInput" type="number" placeholder="Quantity">
+                    <span id="quantityError" class="fieldError"></span>
                 </div>
                 <div class="popupFormRow">
                     <label for="availabilityInput">Availability: </label>
@@ -192,6 +200,7 @@ function addProduct(){
                         <option value="true">Available</option>
                         <option value="false">Not available</option>
                     </select>
+                    <span id="availabilityError" class="fieldError"></span>
                 </div>
                 <div class="popupFormRow">
                     <button type="button" id="confirmAdding">Add Product</button>
@@ -216,35 +225,56 @@ function addProduct(){
         let availability = document.getElementById("availabilityInput").value;
         let quantity = document.getElementById("quantityInput").value;
 
-        if(name === "" || desc === "" || brand === ""
-            || category === ""){
-            alert("Please enter a valid product!");
-            return;
+        let errors = {};
+
+        if(name === ""){
+            errors.name = "Name is required";
+        }
+
+        if(desc === ""){
+            errors.desc = "Description is required";
+        }
+
+        if(brand === ""){
+            errors.brand = "Brand is required";
+        }
+
+        if(category === ""){
+            errors.category = "Category is required";
         }
 
         if(price === "" || isNaN(Number(price))){
-            alert("Price must be number!");
-            return;
+            errors.price = "Price must be number!";
         }
 
         if(!image){
-            alert("Please enter a valid image!");
-            return;
+            errors.image = "Please enter a valid image!";
         }
 
         let datePattern = /^\d{4}-\d{2}-\d{2}$/;
         if(!datePattern.test(releaseDate)){
-            alert("Invalid date! Must be yyyy-MM-dd format!");
-            return;
+            errors.date = "Invalid date! Must be yyyy-MM-dd format!";
         }
 
         if(availability === ""){
-            alert("Please select availability!");
-            return;
+            errors.availability = "Please select availability!";
         }
 
         if(quantity === "" || isNaN(Number(quantity))){
-            alert("Quantity must be number!");
+            errors.quantity = "Quantity must be number!";
+        }
+
+        document.getElementById("nameError").innerText = errors.name || "";
+        document.getElementById("descError").innerText = errors.desc || "";
+        document.getElementById("brandError").innerText = errors.brand || "";
+        document.getElementById("priceError").innerText = errors.price || "";
+        document.getElementById("categoryError").innerText = errors.category || "";
+        document.getElementById("imageError").innerText = errors.image || "";
+        document.getElementById("releaseDateError").innerText = errors.date || "";
+        document.getElementById("availabilityError").innerText = errors.availability || "";
+        document.getElementById("quantityError").innerText = errors.quantity || "";
+
+        if(Object.keys(errors).length > 0){
             return;
         }
 
@@ -267,7 +297,14 @@ function addProduct(){
                 if (!response.ok) {
                     return response.json()
                         .then(errorData => {
-                            alert(errorData.message + " Please check your input!");
+                            if (errorData) {
+                                alert(errorData.message + " Please check your input!");
+                            }
+                            let messages = Object.values(errorData)
+                                .flat()
+                                .map(msg => "•" + msg)
+                                .join("\n");
+                            alert(messages);
                         })
                 }
 

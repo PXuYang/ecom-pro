@@ -21,6 +21,7 @@ public class AppUser {
     private Integer userId;
 
     @NotBlank
+    @Column(nullable = false, unique = true)
     private String userName;
 
     @NotBlank

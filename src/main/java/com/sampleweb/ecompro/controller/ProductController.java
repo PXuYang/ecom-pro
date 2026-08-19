@@ -19,7 +19,7 @@ import java.io.IOException;
 public class ProductController {
 
     @Autowired
-    private ProductService service;
+    private ProductService productService;
 
     @GetMapping("/products/findProducts/page")
     public ResponseEntity<PageResponse<ProductResponse>> findProducts(
@@ -34,13 +34,13 @@ public class ProductController {
             @RequestParam int size
     ){
 
-        PageResponse<ProductResponse> products = service.findProducts(name, brand, category, availability, lowStock, sortBy, sortOrder, page, size);
+        PageResponse<ProductResponse> products = productService.findProducts(name, brand, category, availability, lowStock, sortBy, sortOrder, page, size);
         return ResponseEntity.ok(products);
     }
 
     @GetMapping("/products/{id}")
     public ResponseEntity<ProductResponse> getProductById(@PathVariable int id){
-        ProductResponse pro = service.getProductById(id);
+        ProductResponse pro = productService.getProductById(id);
         return ResponseEntity.ok(pro);
     }
 
@@ -48,7 +48,7 @@ public class ProductController {
                 consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ProductResponse> addProductWithImage(@Valid @ModelAttribute ProductUploadRequest newPro)
             throws IOException {
-        ProductResponse pro = service.addProductWithImage(newPro);
+        ProductResponse pro = productService.addProductWithImage(newPro);
         return ResponseEntity.status(HttpStatus.CREATED).body(pro);
     }
 
@@ -56,13 +56,13 @@ public class ProductController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable int id, @Valid @ModelAttribute ProductUploadRequest newPro)
             throws IOException {
-        ProductResponse pro = service.updateProduct(id, newPro);
+        ProductResponse pro = productService.updateProduct(id, newPro);
         return ResponseEntity.ok(pro);
     }
 
     @DeleteMapping("/products/delete/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable int id){
-        boolean pro = service.deleteProduct(id);
+        boolean pro = productService.deleteProduct(id);
         if(!pro){
             return ResponseEntity.notFound().build();
         }
@@ -71,7 +71,7 @@ public class ProductController {
 
     @GetMapping("/products/stat")
     public ResponseEntity<ProductStatResponse> getProductsStat(){
-        ProductStatResponse productStatResponse = service.getStatData();
+        ProductStatResponse productStatResponse = productService.getStatData();
         return ResponseEntity.ok(productStatResponse);
     }
 

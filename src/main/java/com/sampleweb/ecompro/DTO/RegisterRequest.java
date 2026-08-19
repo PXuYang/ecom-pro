@@ -7,17 +7,16 @@ import lombok.Data;
 @Data
 public class RegisterRequest {
 
-    @NotBlank
+    @NotBlank(message = "Username is required")
     @Pattern(regexp = "\\S+", message = "User name cannot contain spaces!")
     private String userName;
 
-    @NotBlank
-    @Pattern(regexp = "^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).{8,}$",
-             message = "Password must be at least eight characters " +
-                     "\nand contain one uppercase letter," +
-                     "\none lowercase letter" +
-                     "\none number" +
-                     "\none special character")
+    @NotBlank(message = "Password cannot be empty")
+    @Pattern(regexp = ".{8,}", message = "Password must be at least eight characters")
+    @Pattern(regexp = ".*[a-z].*", message = "Password must contain one lowercase letter")
+    @Pattern(regexp = ".*\\d.*", message = "Password must contain one number")
+    @Pattern(regexp = ".*[^A-Za-z0-9].*", message = "Password must contain one special character")
+    @Pattern(regexp = ".*[A-Z].*", message = "Password must contain one uppercase letter")
     private String userPassword;
 
 }
