@@ -92,34 +92,42 @@ function updateProduct(id){
                     <div class="popupFormRow">
                         <label for="updateNameInput">Name: </label>
                         <input id="updateNameInput" value="${currentProduct.name}">
+                        <span id="updateNameError" class="fieldError"></span>
                     </div>
                     <div class="popupFormRow">
                         <label for="updateDescInput">Description: </label>
                         <input id="updateDescInput" value="${currentProduct.description}">
+                        <span id="updateDescError" class="fieldError"></span>
                     </div>
                     <div class="popupFormRow">
                         <label for="updateBrandInput">Brand: </label>
                         <input id="updateBrandInput" value="${currentProduct.brand}">
+                        <span id="updateBrandError" class="fieldError"></span>
                     </div>
                     <div class="popupFormRow">
                         <label for="updatePriceInput">Price: </label>
                         <input id="updatePriceInput" type="number" value="${currentProduct.price}">
+                        <span id="updatePriceError" class="fieldError"></span>
                     </div>
                     <div class="popupFormRow">
                         <label for="updateCategoryInput">Category: </label>
                         <input id="updateCategoryInput" value="${currentProduct.category}">
+                        <span id="updateCategoryError" class="fieldError"></span>
                     </div>
                     <div class="popupFormRow">
                         <label for="updateReleaseDateInput">Release Date: </label>
                         <input id="updateReleaseDateInput" type="date" value="${currentProduct.releaseDate}">
+                        <span id="updateReleaseDateError" class="fieldError"></span>
                     </div>
                     <div class="popupFormRow">
                         <label for="updateImageInput">Image: </label>
                         <input id="updateImageInput" type="file"">
+                        <span id="updateImageError" class="fieldError"></span>
                     </div>
                     <div class="popupFormRow">
                         <label for="updateQuantityInput">Quantity: </label>
                         <input id="updateQuantityInput" type="number" value="${currentProduct.quantity}">
+                        <span id="updateQuantityError" class="fieldError"></span>
                     </div>
                     <div class="popupFormRow">
                         <label for="updateAvailabilityInput">Availability: </label>
@@ -128,6 +136,7 @@ function updateProduct(id){
                             <option value="true">Available</option>
                             <option value="false">Not available</option>
                         </select>
+                        <span id="updateAvailabilityError" class="fieldError"></span>
                     </div>
                     <div class="popupFormRow">
                         <button id="confirmUpdate">Confirm</button>
@@ -154,30 +163,51 @@ function updateProduct(id){
         let availability = document.getElementById("updateAvailabilityInput").value;
         let quantity = document.getElementById("updateQuantityInput").value;
 
-        if(name === "" || desc === "" || brand === ""
-            || category === ""){
-            alert("Please enter a valid product!");
-            return;
+        let errors = {};
+
+        if(name === ""){
+            errors.name = "Name is required";
+        }
+
+        if(desc === ""){
+            errors.desc = "Description is required";
+        }
+
+        if(brand === ""){
+            errors.brand = "Brand is required";
+        }
+
+        if(category === ""){
+            errors.category = "Category is required";
         }
 
         if(price === "" || isNaN(Number(price))){
-            alert("Price must be number!");
-            return;
+            errors.price = "Price must be number";
         }
 
         let datePattern = /^\d{4}-\d{2}-\d{2}$/;
         if(!datePattern.test(releaseDate)){
-            alert("Invalid date! Must be yyyy-MM-dd format!");
-            return;
+            errors.releaseDate = "Invalid Date! Must be yyyy-MM-dd format!";
         }
 
         if(availability === ""){
-            alert("Please select availability!");
-            return;
+            errors.availability = "Please select availability!";
         }
 
         if(quantity === "" || isNaN(Number(quantity))){
-            alert("Quantity must be number!");
+            errors.quantity = "Quantity must be number";
+        }
+
+        document.getElementById("updateNameError").innerText = errors.name || "";
+        document.getElementById("updateDescError").innerText = errors.desc || "";
+        document.getElementById("updateBrandError").innerText = errors.brand || "";
+        document.getElementById("updatePriceError").innerText = errors.price || "";
+        document.getElementById("updateCategoryError").innerText = errors.category || "";
+        document.getElementById("updateReleaseDateError").innerText = errors.releaseDate || "";
+        document.getElementById("updateQuantityError").innerText = errors.quantity || "";
+        document.getElementById("updateAvailabilityError").innerText = errors.availability || "";
+
+        if(Object.keys(errors).length > 0){
             return;
         }
 
