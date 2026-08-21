@@ -1,9 +1,9 @@
 package com.sampleweb.ecompro.controller;
 
-import com.sampleweb.ecompro.DTO.PageResponse;
-import com.sampleweb.ecompro.DTO.ProductResponse;
-import com.sampleweb.ecompro.DTO.ProductStatResponse;
-import com.sampleweb.ecompro.DTO.ProductUploadRequest;
+import com.sampleweb.ecompro.dto.PageResponse;
+import com.sampleweb.ecompro.dto.ProductResponse;
+import com.sampleweb.ecompro.dto.ProductStatResponse;
+import com.sampleweb.ecompro.dto.ProductUploadRequest;
 import com.sampleweb.ecompro.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

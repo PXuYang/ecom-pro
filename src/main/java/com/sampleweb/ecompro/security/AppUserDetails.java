@@ -1,4 +1,4 @@
-package com.sampleweb.ecompro.DTO;
+package com.sampleweb.ecompro.security;
 
 import com.sampleweb.ecompro.model.AppUser;
 import org.jspecify.annotations.NonNull;
@@ -18,7 +18,7 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public @NonNull String getUsername() {
-        return appUser.getUserName();
+        return appUser.getUsername();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.sampleweb.ecompro.DTO;
+package com.sampleweb.ecompro.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

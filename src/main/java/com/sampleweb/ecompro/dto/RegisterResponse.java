@@ -1,4 +1,4 @@
-package com.sampleweb.ecompro.DTO;
+package com.sampleweb.ecompro.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class RegisterResponse {
 
-    private String userName;
+    private String username;
     private String message;
 
 }

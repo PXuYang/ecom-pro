@@ -1,6 +1,6 @@
 package com.sampleweb.ecompro.service;
 
-import com.sampleweb.ecompro.DTO.ImageResponse;
+import com.sampleweb.ecompro.dto.ImageResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

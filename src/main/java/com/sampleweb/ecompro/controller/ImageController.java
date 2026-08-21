@@ -1,6 +1,6 @@
 package com.sampleweb.ecompro.controller;
 
-import com.sampleweb.ecompro.DTO.ImageResponse;
+import com.sampleweb.ecompro.dto.ImageResponse;
 import com.sampleweb.ecompro.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

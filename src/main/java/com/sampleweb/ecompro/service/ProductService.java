@@ -1,9 +1,9 @@
 package com.sampleweb.ecompro.service;
 
-import com.sampleweb.ecompro.DTO.PageResponse;
-import com.sampleweb.ecompro.DTO.ProductResponse;
-import com.sampleweb.ecompro.DTO.ProductStatResponse;
-import com.sampleweb.ecompro.DTO.ProductUploadRequest;
+import com.sampleweb.ecompro.dto.PageResponse;
+import com.sampleweb.ecompro.dto.ProductResponse;
+import com.sampleweb.ecompro.dto.ProductStatResponse;
+import com.sampleweb.ecompro.dto.ProductUploadRequest;
 import com.sampleweb.ecompro.Exception.ProductImageException;
 import com.sampleweb.ecompro.Exception.ProductNotFoundException;
 import com.sampleweb.ecompro.model.Product;
@@ -126,8 +126,10 @@ public class ProductService {
         return productStatResponse;
     }
 
-    public PageResponse<ProductResponse> findProducts(String name, String brand, String category, Boolean availability, Boolean lowStock,
-                                              String sortBy, String sortOrder, int page, int size){
+    public PageResponse<ProductResponse> findProducts(String name, String brand, String category,
+                                                      Boolean availability, Boolean lowStock,
+                                                      String sortBy, String sortOrder,
+                                                      int page, int size){
 
         Sort sort = Sort.unsorted();
         if(sortBy != null && !sortBy.isBlank()){
@@ -143,7 +145,9 @@ public class ProductService {
         }
 
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<ProductResponse> products = productRepo.findProducts(name, brand, category, availability, lowStock, pageable).map(this::toResponse);
+        Page<ProductResponse> products =
+                productRepo.findProducts(name, brand, category, availability, lowStock, pageable)
+                        .map(this::toResponse);
 
         return pageService.toResponse(products);
     }

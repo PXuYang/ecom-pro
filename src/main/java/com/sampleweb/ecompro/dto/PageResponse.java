@@ -1,4 +1,4 @@
-package com.sampleweb.ecompro.DTO;
+package com.sampleweb.ecompro.dto;
 
 import lombok.Data;
 

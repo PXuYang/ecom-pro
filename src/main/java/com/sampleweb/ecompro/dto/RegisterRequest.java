@@ -1,4 +1,4 @@
-package com.sampleweb.ecompro.DTO;
+package com.sampleweb.ecompro.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -9,7 +9,7 @@ public class RegisterRequest {
 
     @NotBlank(message = "Username is required")
     @Pattern(regexp = "\\S+", message = "User name cannot contain spaces!")
-    private String userName;
+    private String username;
 
     @NotBlank(message = "Password cannot be empty")
     @Pattern(regexp = ".{8,}", message = "Password must be at least eight characters")

@@ -1,6 +1,6 @@
 package com.sampleweb.ecompro.service;
 
-import com.sampleweb.ecompro.DTO.PageResponse;
+import com.sampleweb.ecompro.dto.PageResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 

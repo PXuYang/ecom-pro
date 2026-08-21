@@ -1,7 +1,7 @@
 package com.sampleweb.ecompro.controller;
 
-import com.sampleweb.ecompro.DTO.RegisterRequest;
-import com.sampleweb.ecompro.DTO.RegisterResponse;
+import com.sampleweb.ecompro.dto.RegisterRequest;
+import com.sampleweb.ecompro.dto.RegisterResponse;
 import com.sampleweb.ecompro.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
