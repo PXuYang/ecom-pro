@@ -9,6 +9,7 @@ import com.sampleweb.ecompro.model.AppUser;
 import com.sampleweb.ecompro.model.Role;
 import com.sampleweb.ecompro.repository.AppUserRepo;
 import com.sampleweb.ecompro.repository.RoleRepo;
+import com.sampleweb.ecompro.security.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,16 +27,18 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepo roleRepo;
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     public AuthService(AppUserRepo appUserRepo,
                        PasswordEncoder passwordEncoder,
                        RoleRepo roleRepo,
-                       AuthenticationManager authenticationManager){
+                       AuthenticationManager authenticationManager, JwtService jwtService){
 
         this.appUserRepo = appUserRepo;
         this.passwordEncoder = passwordEncoder;
         this.roleRepo = roleRepo;
         this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
 
     public RegisterResponse register(RegisterRequest registerRequest){
@@ -70,9 +73,11 @@ public class AuthService {
         String username = appUserDetails.getUsername();
         Set<RoleName> roles = authentication.getAuthorities()
                 .stream()
-                .map(authorities -> RoleName.valueOf(authorities.getAuthority()))
+                .map(authority -> RoleName.valueOf(authority.getAuthority()))
                 .collect(Collectors.toSet());
 
-        return new LoginResponse(username, roles, "ssss");
+        String token = jwtService.generateJwt(appUserDetails);
+
+        return new LoginResponse(username, roles, token);
     }
 }
