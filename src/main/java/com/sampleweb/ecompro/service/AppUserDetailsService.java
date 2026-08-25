@@ -1,7 +1,8 @@
-package com.sampleweb.ecompro.security;
+package com.sampleweb.ecompro.service;
 
 import com.sampleweb.ecompro.model.AppUser;
 import com.sampleweb.ecompro.repository.AppUserRepo;
+import com.sampleweb.ecompro.security.AppUserDetails;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

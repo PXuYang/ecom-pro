@@ -1,5 +1,7 @@
 package com.sampleweb.ecompro.controller;
 
+import com.sampleweb.ecompro.dto.LoginRequest;
+import com.sampleweb.ecompro.dto.LoginResponse;
 import com.sampleweb.ecompro.dto.RegisterRequest;
 import com.sampleweb.ecompro.dto.RegisterResponse;
 import com.sampleweb.ecompro.service.AuthService;
@@ -23,7 +25,17 @@ public class AuthController {
             @Valid @RequestBody RegisterRequest registerRequest){
 
         RegisterResponse registerResponse = authService.register(registerRequest);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(registerResponse);
 
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(
+            @RequestBody LoginRequest loginRequest){
+
+        LoginResponse loginResponse = authService.login(loginRequest);
+
+        return ResponseEntity.ok(loginResponse);
     }
 }

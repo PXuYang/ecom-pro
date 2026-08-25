@@ -13,7 +13,9 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -26,15 +28,23 @@ import java.nio.charset.StandardCharsets;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http){
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   JwtAuthenticationFilter jwtAuthenticationFilter,
+                                                   AuthenticationEntryPoint authenticationEntryPoint)
+    throws Exception{
 
-        http.csrf(csrf -> csrf.disable())
+        http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
-                        auth -> auth.anyRequest().permitAll())
+                    auth -> auth.anyRequest().permitAll())
                 .cors(Customizer.withDefaults())
                 .headers(
-                        headers -> headers.frameOptions(
-                                frame -> frame.sameOrigin()));
+                    headers -> headers.frameOptions(
+                            frame -> frame.sameOrigin()))
+                .addFilterBefore(jwtAuthenticationFilter,
+                    UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(
+                        exception -> exception.authenticationEntryPoint(authenticationEntryPoint));
 
         return http.build();
     }
