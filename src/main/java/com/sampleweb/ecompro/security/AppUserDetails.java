@@ -32,4 +32,8 @@ public class AppUserDetails implements UserDetails {
                 .map(role -> new SimpleGrantedAuthority(role.getRoleName().name())).toList();
     }
 
+    public AppUser getAppUser(){
+        return appUser;
+    }
+
 }

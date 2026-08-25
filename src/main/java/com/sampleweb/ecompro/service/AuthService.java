@@ -70,10 +70,11 @@ public class AuthService {
         Authentication authentication = authenticationManager.authenticate(authenticationRequest);
 
         AppUserDetails appUserDetails = (AppUserDetails) authentication.getPrincipal();
-        String username = appUserDetails.getUsername();
-        Set<RoleName> roles = authentication.getAuthorities()
+        AppUser appUser = appUserDetails.getAppUser();
+        String username = appUser.getUsername();
+        Set<RoleName> roles = appUser.getRoles()
                 .stream()
-                .map(authority -> RoleName.valueOf(authority.getAuthority()))
+                .map(Role::getRoleName)
                 .collect(Collectors.toSet());
 
         String token = jwtService.generateJwt(appUserDetails);
