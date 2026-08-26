@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ecom Pro Register</title>
+
+    <link rel="stylesheet" href="loginRegisterStyle.css">
+</head>
+<body>
+    <h1>Ecom Pro</h1>
+
+    <form>
+        <h2>Create account</h2>
+        <label for="usernameInput">username:</label>
+        <input id="usernameInput" type="text">
+
+        <label for="passwordInput">password:</label>
+        <input id="passwordInput" type="password">
+
+        <div class="passwordRequirements">
+            <p>Password must contain:</p>
+            <ul>
+                <li id="lengthRequirement">At least 8 characters</li>
+                <li id="lowercaseRequirement">One lowercase letter</li>
+                <li id="uppercaseRequirement">One uppercase letter</li>
+                <li id="specialRequirement">One special character</li>
+                <li id="numberRequirement">One number</li>
+            </ul>
+        </div>
+
+        <button type="submit">Create Account</button>
+    </form>
+
+    <p>
+        Already have an account?
+        <a href="login.html">Login</a>
+    </p>
+
+</body>
+</html>
