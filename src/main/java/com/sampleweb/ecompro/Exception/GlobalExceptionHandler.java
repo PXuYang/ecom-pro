@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ProductImageException.class)
     public ResponseEntity<Map<String, String>> handleIllegalArgumentException(ProductImageException ex){
         Map<String, String> errors = new HashMap<>();
-        errors.put("message:", ex.getMessage());
+        errors.put("message", ex.getMessage());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<Map<String, String>> productNotFoundException(ProductNotFoundException ex){
         Map<String, String> errors = new HashMap<>();
-        errors.put("message:", ex.getMessage());
+        errors.put("message", ex.getMessage());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errors);
     }
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, String>> bodyMissingException(HttpMessageNotReadableException ex){
         Map<String, String> errors = new HashMap<>();
-        errors.put("message:", "Wrong data type or Body is missing!");
+        errors.put("message", "Wrong data type or Body is missing!");
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UsernameAlreadyExistsException.class)
     public ResponseEntity<Map<String, String>> usernameAlreadyExistsException(UsernameAlreadyExistsException ex){
         Map<String, String> errors = new HashMap<>();
-        errors.put("message:", ex.getMessage());
+        errors.put("message", ex.getMessage());
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errors);
     }
