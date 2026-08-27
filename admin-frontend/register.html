@@ -9,13 +9,15 @@
 <body>
     <h1>Ecom Pro</h1>
 
-    <form>
+    <form id="registerForm">
         <h2>Create account</h2>
-        <label for="usernameInput">username:</label>
-        <input id="usernameInput" type="text">
+        <label for="registerUsernameInput">username:</label>
+        <input id="registerUsernameInput" type="text">
+        <span id="registerUsernameError" class="fieldError"></span>
 
-        <label for="passwordInput">password:</label>
-        <input id="passwordInput" type="password">
+        <label for="registerPasswordInput">password:</label>
+        <input id="registerPasswordInput" type="password">
+        <span id="registerPasswordError" class="fieldError"></span>
 
         <div class="passwordRequirements">
             <p>Password must contain:</p>
@@ -36,5 +38,6 @@
         <a href="login.html">Login</a>
     </p>
 
+    <script src="register.js"></script>
 </body>
 </html>

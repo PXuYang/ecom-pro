@@ -297,9 +297,6 @@ function addProduct(){
                 if (!response.ok) {
                     return response.json()
                         .then(errorData => {
-                            if (errorData) {
-                                alert(errorData.message + " Please check your input!");
-                            }
                             let messages = Object.values(errorData)
                                 .flat()
                                 .map(msg => "•" + msg)
