@@ -9,13 +9,15 @@
 <body>
     <h1>Ecom Pro</h1>
 
-    <form>
+    <form id="loginForm">
         <h2>Login to your account</h2>
         <label for="loginUsernameInput">username:</label>
         <input id="loginUsernameInput" type="text">
+        <span id="loginUsernameError" class="fieldError"></span>
 
         <label for="loginPasswordInput">password:</label>
         <input id="loginPasswordInput" type="password">
+        <span id="loginPasswordError" class="fieldError"></span>
 
         <button type="submit">Login</button>
     </form>
@@ -25,5 +27,6 @@
         <a href="register.html">Register</a>
     </p>
 
+    <script src="login.js"></script>
 </body>
 </html>

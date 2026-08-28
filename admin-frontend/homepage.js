@@ -299,7 +299,7 @@ function addProduct(){
                         .then(errorData => {
                             let messages = Object.values(errorData)
                                 .flat()
-                                .map(msg => "•" + msg)
+                                .map(msg => "•    " + msg)
                                 .join("\n");
                             alert(messages);
                         })

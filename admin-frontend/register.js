@@ -89,7 +89,7 @@ registerForm.addEventListener('submit', event => {
                 .then(errorData => {
                     let message = Object.values(errorData)
                         .flat()
-                        .map(msg => "•" + msg)
+                        .map(msg => "•    " + msg)
                         .join("\n");
 
                     throw new Error(message);
