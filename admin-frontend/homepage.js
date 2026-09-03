@@ -43,7 +43,7 @@ function loadProductsByPage(page) {
         url += "&sortOrder=" + currentSortOrder;
     }
 
-    fetch(url)
+    authenticateFetch(url)
         .then(response => {
             if(!response.ok) {
                 throw new Error("Http error: " + response.status);
@@ -59,8 +59,7 @@ function loadProductsByPage(page) {
             displayPaginationButtons(pageData);
         })
         .catch(error => {
-            console.error(error);
-            document.getElementById("products").innerHTML = "Failed to load products...";
+            handleRequestError(error, "Failed to load products...");
         });
 }
 
@@ -134,15 +133,20 @@ function displayProducts(products) {
 
 function showProductStat(){
 
-    fetch(BASE_URL + "products/stat")
-    .then(response => response.json())
+    authenticateFetch(BASE_URL + "products/stat")
+    .then(response => {
+        if(!response.ok) {
+            throw new Error("Http error: " + response.status);
+        }
+        return response.json();
+    })
     .then(stats => {
         document.getElementById("totalProCount").innerText = stats.totalProductCount;
         document.getElementById("lowStockCount").innerText = stats.lowStockCount;
         document.getElementById("categoryCount").innerText = stats.categoryCount;
     })
     .catch(error => {
-        console.log(error);
+        handleRequestError(error, "Failed to load products...");
     });
 }
 
@@ -289,7 +293,7 @@ function addProduct(){
         product.append("availability", availability);
         product.append("quantity", Number(quantity));
 
-        fetch(BASE_URL + "products/with-image", {
+        authenticateFetch(BASE_URL + "products/with-image", {
             method: "POST",
             body: product,
         })
@@ -309,8 +313,7 @@ function addProduct(){
                 popup.remove();
             })
             .catch(error => {
-                console.log(error);
-                alert("Failed to create product!");
+                handleRequestError(error, "Failed to load products...");
             })
     };
 
@@ -320,7 +323,7 @@ function showLowStockDetails() {
 
     let lowStockDetails = "";
 
-    fetch(BASE_URL + "products/findProducts/page?page=0&size=1000&lowStock=true")
+    authenticateFetch(BASE_URL + "products/findProducts/page?page=0&size=1000&lowStock=true")
     .then(response => response.json())
         .then(pageData => {
 
@@ -356,8 +359,7 @@ function showLowStockDetails() {
             };
         })
         .catch(error => {
-        console.log(error);
-        alert("Failed to load low stock products!");
+            handleRequestError(error, "Failed to load low stock products!");
         })
 }
 
@@ -519,4 +521,7 @@ function goToProductDetail(id){
     window.location.href="product-detail.html?id=" + id;
 }
 
-refreshPage();
+if(checkAuthentication()){
+    refreshPage();
+}
+

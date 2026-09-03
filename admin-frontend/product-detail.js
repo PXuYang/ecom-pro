@@ -9,7 +9,7 @@ function loadProductById(id){
 
     document.getElementById("productDetail").innerText = "Loading product...";
 
-    fetch(`http://localhost:8080/api/products/${id}`)
+    authenticateFetch(`http://localhost:8080/api/products/${id}`)
         .then(response => response.json())
         .then(product => {
             console.log("Loaded product", product);
@@ -17,8 +17,7 @@ function loadProductById(id){
             displayProductDetail(product);
         })
         .catch(error => {
-            console.log(error);
-            document.getElementById("productDetail").innerText = "Failed to load product...";
+            handleRequestError(error, "Failed to load product...");
         });
 
 }
@@ -61,15 +60,14 @@ function deleteProduct(id){
         return;
     }
 
-    fetch("http://localhost:8080/api/products/delete/" + id, {
+    authenticateFetch("http://localhost:8080/api/products/delete/" + id, {
         method: "DELETE",
     })
         .then(() => {
             window.location.href="homepage.html";
         })
         .catch(error => {
-                console.log(error)
-                alert("Failed to delete product!");
+            handleRequestError(error, "Failed to delete this product!");
             }
         );
 
@@ -229,7 +227,7 @@ function updateProduct(id){
             console.log(pair[0],pair[1]);
         }
 
-        fetch("http://localhost:8080/api/products/update/" + id + "/with-image", {
+        authenticateFetch("http://localhost:8080/api/products/update/" + id + "/with-image", {
             method: "PUT",
             body: product,
         })
@@ -245,8 +243,7 @@ function updateProduct(id){
                 popup.remove();
             })
             .catch(error => {
-                console.log(error);
-                alert("Failed to update product!");
+                handleRequestError(error, "Failed to update product!");
             })
     };
 

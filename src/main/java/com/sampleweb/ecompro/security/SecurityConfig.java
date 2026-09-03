@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                     auth -> auth
                             .requestMatchers("/api/auth/**").permitAll()
+                            .requestMatchers("/api/images/**").permitAll()
                             .anyRequest().authenticated())
                 .cors(Customizer.withDefaults())
                 .headers(
