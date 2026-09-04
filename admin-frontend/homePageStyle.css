@@ -12,9 +12,30 @@
 .navBar-title {
     font-size: 24px;
     font-weight: bold;
+    color: coral;
+}
+
+.navBar-Actions{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navBar-Actions a{
+    text-decoration: none;
+    color: lightcoral;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.profile{
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .menu{
+    cursor: pointer;
     font-size: 20px;
     font-weight: bold;
     color: brown;
@@ -39,6 +60,7 @@
 
 .dropdown-content a{
     display: block;
+    font-size: 16px;
     padding: 12px;
     text-decoration: none;
     color: black;

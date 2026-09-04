@@ -54,5 +54,9 @@ function handleRequestError(error, message) {
     }
 
     alert(message);
+}
 
+function logout() {
+    clearAuthentication();
+    window.location.href = 'login.html';
 }

@@ -9,15 +9,30 @@
 <body>
 <div class="navBar">
     <div class="navBar-title">Ecom Admin</div>
-    <div class="dropdown">
-        <button class="menu">menu</button>
+    <div class="navBar-Actions">
+        <a href="shop.html">Go to Shop</a>
+        <div class="dropdown">
+            <span class="menu">menu</span>
 
-        <div class="dropdown-content">
-            <a href="#intro">Website Intro</a>
-            <a href="#dashboard">Dashboard</a>
-            <a href="#productSection">Product List</a>
-            <a onclick="addProduct()">Add Product</a>
+            <div class="dropdown-content">
+                <a href="#intro">Web Intro</a>
+                <a href="#dashboard">Dashboard</a>
+                <a href="#productSection">Product List</a>
+                <a onclick="addProduct()">Add Product</a>
+            </div>
         </div>
+
+        <div class="dropdown">
+            <div class="profile">
+                👤 <span id="usernameDisplay"></span>
+                <div class="dropdown-content">
+                    <a>Profile</a>
+                    <a>Change Password</a>
+                    <a onclick="logout()">Log Out</a>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
     <div id="intro" class="introBox">

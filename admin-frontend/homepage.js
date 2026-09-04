@@ -146,7 +146,7 @@ function showProductStat(){
         document.getElementById("categoryCount").innerText = stats.categoryCount;
     })
     .catch(error => {
-        handleRequestError(error, "Failed to load products...");
+        handleRequestError(error, "Failed to load products statistics...");
     });
 }
 
@@ -313,7 +313,7 @@ function addProduct(){
                 popup.remove();
             })
             .catch(error => {
-                handleRequestError(error, "Failed to load products...");
+                handleRequestError(error, "Failed to add products...");
             })
     };
 
@@ -324,7 +324,12 @@ function showLowStockDetails() {
     let lowStockDetails = "";
 
     authenticateFetch(BASE_URL + "products/findProducts/page?page=0&size=1000&lowStock=true")
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Http error: " + response.status);
+        }
+        return response.json()
+    })
         .then(pageData => {
 
             let lowStock = pageData.content || [];
@@ -524,4 +529,6 @@ function goToProductDetail(id){
 if(checkAuthentication()){
     refreshPage();
 }
+
+document.getElementById("usernameDisplay").innerText = getUsername();
 
