@@ -155,7 +155,7 @@ function addProduct(){
     let popup = document.createElement("div");
     popup.innerHTML = `
         <div class="popupOverlay">
-            <div class="popupWindow">
+            <div class="popupWindow productPopupWindow">
                 <h2>Add Product</h2>
                 <div class="popupFormRow">
                     <label for="nameInput">Name: </label>

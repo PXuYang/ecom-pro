@@ -187,6 +187,16 @@ body{
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
 }
 
+.productPopupWindow{
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 20px 28px;
+}
+
+.productPopupWindow .popupFormRow{
+    margin-bottom: 10px;
+}
+
 .popupFormRow{
     margin-bottom: 14px;
     text-align: left;

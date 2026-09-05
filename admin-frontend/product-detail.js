@@ -85,7 +85,7 @@ function updateProduct(id){
     let popup = document.createElement("div");
     popup.innerHTML = `
         <div class="popupOverlay">
-            <div class="popupWindow">
+            <div class="popupWindow productPopupWindow">
                 <h2>Update Product</h2>
                     <div class="popupFormRow">
                         <label for="updateNameInput">Name: </label>
