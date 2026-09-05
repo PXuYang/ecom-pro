@@ -64,7 +64,7 @@ function deleteProduct(id){
         method: "DELETE",
     })
         .then(() => {
-            window.location.href="homepage.html";
+            window.location.href="admin.html";
         })
         .catch(error => {
             handleRequestError(error, "Failed to delete this product!");

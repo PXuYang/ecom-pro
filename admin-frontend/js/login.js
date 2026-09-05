@@ -60,7 +60,7 @@ loginForm.addEventListener('submit', event => {
         console.log(data.token);
 
         //For now
-        window.location.href = 'homepage.html';
+        window.location.href = 'admin.html';
     })
     .catch(error => {
         alert(error.message);
