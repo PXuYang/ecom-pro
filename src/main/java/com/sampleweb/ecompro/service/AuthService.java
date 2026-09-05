@@ -1,5 +1,7 @@
 package com.sampleweb.ecompro.service;
 
+import com.sampleweb.ecompro.Exception.OldNewPasswordSameException;
+import com.sampleweb.ecompro.Exception.PasswordIncorrectException;
 import com.sampleweb.ecompro.dto.*;
 import com.sampleweb.ecompro.Exception.RoleNotFoundException;
 import com.sampleweb.ecompro.Exception.UsernameAlreadyExistsException;
@@ -13,6 +15,7 @@ import com.sampleweb.ecompro.security.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -80,5 +83,28 @@ public class AuthService {
         String token = jwtService.generateJwt(appUserDetails);
 
         return new LoginResponse(username, roles, token);
+    }
+
+    public void changePassword(String username, PasswordChangeRequest passwordChangeRequest){
+        AppUser appUser = appUserRepo.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
+
+        if(!passwordEncoder.matches(
+                passwordChangeRequest.getCurrentPassword(),
+                appUser.getUserPassword()
+        )){
+            throw new PasswordIncorrectException("Current password is incorrect!");
+        }
+
+        if (passwordEncoder.matches(
+                passwordChangeRequest.getNewPassword(),
+                appUser.getUserPassword()
+        )){
+            throw new OldNewPasswordSameException("New password cannot be the same as current password");
+        }
+
+        appUser.setUserPassword(passwordEncoder.encode(passwordChangeRequest.getNewPassword()));
+
+        appUserRepo.save(appUser);
     }
 }

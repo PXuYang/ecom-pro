@@ -75,4 +75,20 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errors);
     }
+
+    @ExceptionHandler(PasswordIncorrectException.class)
+    public ResponseEntity<Map<String, String>> passwordIncorrectException(PasswordIncorrectException ex){
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
+    @ExceptionHandler(OldNewPasswordSameException.class)
+    public ResponseEntity<Map<String, String>> oldNewPasswordSameException(OldNewPasswordSameException ex){
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
 }
