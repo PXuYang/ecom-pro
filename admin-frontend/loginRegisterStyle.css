@@ -43,6 +43,16 @@ label{
     margin-top: 10px;
 }
 
+.showPassword{
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+}
+
+.showPassword input{
+    width: auto;
+}
+
 input{
     padding: 10px;
     margin-bottom: 5px;

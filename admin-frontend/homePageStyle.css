@@ -181,9 +181,10 @@ body{
 
 .popupWindow{
     background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 320px;
+    padding: 28px;
+    border-radius: 14px;
+    width: 360px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
 }
 
 .popupFormRow{
@@ -195,12 +196,39 @@ body{
     display: block;
     width: 100%;
     box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.popupFormRow input:focus{
+    outline: none;
+    border-color: coral;
+    box-shadow: 0 0 0 2px rgba(255, 127, 80, 0.15);
 }
 
 .popupFormRow label{
     display: block;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+.popupFormRow .showPassword{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: normal;
+    margin-top: 6px;
+    color: #555;
+    cursor: pointer;
+}
+
+.popupFormRow .showPassword input{
+    width: auto;
+    margin: 0;
 }
 
 .fieldError{

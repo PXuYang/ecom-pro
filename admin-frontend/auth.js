@@ -57,18 +57,27 @@ function changePassword() {
                     <label for="currentPasswordInput">Current Password</label>
                     <input id="currentPasswordInput" type="password" 
                     placeholder="Enter Your Current Password">
+                    <label class="showPassword">
+                        <input type="checkbox" data-toggle-target="currentPasswordInput">Show Password
+                    </label>
                     <span id="currentPasswordError" class="fieldError"></span>
                 </div>
                 <div class="popupFormRow">
                     <label for="newPasswordInput">New Password</label>
                     <input id="newPasswordInput" type="password" 
                     placeholder="Enter New Password">
+                    <label class="showPassword">
+                        <input type="checkbox" data-toggle-target="newPasswordInput">Show Password
+                    </label>
                     <span id="newPasswordError" class="fieldError"></span>
                 </div>
                 <div class="popupFormRow">
                     <label for="confirmNewPasswordInput">Confirm New Password</label>
                     <input id="confirmNewPasswordInput" type="password" 
                     placeholder="Confirm New Password">
+                    <label class="showPassword">
+                        <input type="checkbox" data-toggle-target="confirmNewPasswordInput">Show Password
+                    </label>
                     <span id="confirmNewPasswordError" class="fieldError"></span>
                 </div>  
                 <div class="popupFormRow">
@@ -80,6 +89,8 @@ function changePassword() {
         `;
 
     document.body.append(popup);
+    setupPasswordToggle(popup);
+
     document.getElementById('cancelChanging').addEventListener('click', () => {
         popup.remove();
     });
@@ -172,3 +183,21 @@ function handleRequestError(error, message) {
 
     alert(error.message || message);
 }
+
+function setupPasswordToggle(container) {
+    const toggles = document.querySelectorAll('[data-toggle-target]');
+    toggles.forEach(toggle => {
+        toggle.addEventListener('change', () => {
+            const targetId = toggle.getAttribute('data-toggle-target');
+            const passwordInput = document.getElementById(targetId);
+
+            if (passwordInput) {
+                passwordInput.type = toggle.checked ? 'text' : 'password';
+            }
+        })
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    setupPasswordToggle(document);
+})
