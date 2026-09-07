@@ -523,7 +523,7 @@ function refreshPage(){
 }
 
 function goToProductDetail(id){
-    window.location.href="product-detail.html?id=" + id;
+    window.location.href="admin-product-detail.html?id=" + id;
 }
 
 if(checkAuthentication()){

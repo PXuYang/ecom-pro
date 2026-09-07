@@ -57,8 +57,6 @@ loginForm.addEventListener('submit', event => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('roles', JSON.stringify(data.roles));
 
-        console.log(data.token);
-
         //For now
         window.location.href = 'admin.html';
     })

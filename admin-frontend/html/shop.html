@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ecom Shop</title>
+
+    <link rel="stylesheet" href="../css/auth.css">
+    <link rel="stylesheet" href="../css/shop.css">
+</head>
+<body>
+
+<nav class="shopNavbar">
+    <div class="shopLogo">Ecom Pro</div>
+
+    <div class="shopSearch">
+      <input id="productSearchInput" type="text" placeholder="Search products...">
+      <button id="searchButton">Search</button>
+    </div>
+
+    <div class="shopNavActions">
+        <a href="#" id="cartLink">🛒 Cart</a>
+
+        <div class="accountMenu">
+            <div class="accountButton">
+                👤
+                <span id="usernameDisplay"></span>
+                <span class="dropdownArrow">▼</span>
+            </div>
+
+            <div class="accountDropdown">
+                <a href="#" id="profileLink">Profile</a>
+                <a href="#" id="changePasswordLink">Change Password</a>
+                <a href="../html/admin.html" id="adminDashboardLink">Admin Dashboard</a>
+                <a href="#" id="logoutLink">Log Out</a>
+            </div>
+        </div>
+  </div>
+
+</nav>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/shop.js"></script>
+</body>
+</html>

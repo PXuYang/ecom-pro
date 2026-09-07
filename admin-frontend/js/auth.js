@@ -123,7 +123,7 @@ function changePassword() {
         }
 
         if (newPassword !== confirmNewPassword) {
-            errors.confirmNewPassword = 'Confirm new password is not match';
+            errors.confirmNewPassword = 'Confirm password do not match with new password!';
         }
 
         document.getElementById('currentPasswordError').innerText = errors.currentPassword || '';
