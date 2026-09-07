@@ -1,0 +1,16 @@
+.socialLinks {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.socialLinks a {
+    color: #333;
+    font-size: 22px;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.socialLinks a:hover {
+    transform: translateY(-2px);
+}
