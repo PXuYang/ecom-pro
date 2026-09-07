@@ -527,7 +527,13 @@ function goToProductDetail(id){
 }
 
 if(checkAuthentication()){
-    refreshPage();
+    const roles= getRoles();
+
+    if (!roles.includes("ADMIN")){
+        window.location.href = "shop.html";
+    } else {
+        refreshPage();
+    }
 }
 
 document.getElementById("usernameDisplay").innerText = getUsername();

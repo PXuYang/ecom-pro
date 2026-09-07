@@ -1,4 +1,5 @@
 const AUTH_ERROR = "Unauthorized";
+const FORBIDDEN_ERROR = "Forbidden";
 
 function checkAuthentication(){
     const token = localStorage.getItem('token');
@@ -20,10 +21,14 @@ function authenticateFetch(url, options = {}){
         }
     })
         .then(response => {
-            if(response.status === 401){
+            if (response.status === 401){
                 clearAuthentication();
                 window.location.href = 'login.html';
                 throw new Error(AUTH_ERROR);
+            }
+
+            if (response.status === 403){
+                throw new Error(FORBIDDEN_ERROR);
             }
             return response;
         });
@@ -178,6 +183,11 @@ function logout() {
 function handleRequestError(error, message) {
 
     if(error.message === AUTH_ERROR){
+        return;
+    }
+
+    if(error.message === FORBIDDEN_ERROR){
+        alert("You do not have permission to perform this action!");
         return;
     }
 

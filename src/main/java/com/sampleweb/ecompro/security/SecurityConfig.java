@@ -1,8 +1,10 @@
 package com.sampleweb.ecompro.security;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -37,8 +39,12 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
                     auth -> auth
+                            .requestMatchers("/api/h2-console/**").permitAll()
                             .requestMatchers("/api/auth/**").permitAll()
                             .requestMatchers("/api/images/**").permitAll()
+                            .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasAuthority("ADMIN")
+                            .requestMatchers(HttpMethod.POST, "/api/products/**").hasAuthority("ADMIN")
+                            .requestMatchers(HttpMethod.PUT, "/api/products/**").hasAuthority("ADMIN")
                             .anyRequest().authenticated())
                 .cors(Customizer.withDefaults())
                 .headers(
@@ -47,7 +53,10 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter,
                     UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(
-                        exception -> exception.authenticationEntryPoint(authenticationEntryPoint));
+                        exception -> exception
+                                .authenticationEntryPoint(authenticationEntryPoint)
+                                .accessDeniedHandler((request, response, accessDeniedException) ->
+                                        response.setStatus(HttpServletResponse.SC_FORBIDDEN)));
 
         return http.build();
     }
