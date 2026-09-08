@@ -42,6 +42,7 @@ public class SecurityConfig {
                             .requestMatchers("/api/h2-console/**").permitAll()
                             .requestMatchers("/api/auth/**").permitAll()
                             .requestMatchers("/api/images/**").permitAll()
+                            .requestMatchers("/api/images/upload").hasAuthority("ADMIN")
                             .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasAuthority("ADMIN")
                             .requestMatchers(HttpMethod.POST, "/api/products/**").hasAuthority("ADMIN")
                             .requestMatchers(HttpMethod.PUT, "/api/products/**").hasAuthority("ADMIN")
