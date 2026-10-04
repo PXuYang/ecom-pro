@@ -39,25 +39,31 @@
     </section>
 
     <section class="productInformation">
-        <button type="button" class="productInfoToggle">
+        <button type="button" class="productInfoToggle" aria-expanded="false">
             Product Information
             <span class="toggleIcon">+</span>
         </button>
-        <div class="productInfoContent">
-
+        <div class="productInfoContent" hidden>
+            <p>Category: <span id="productCategory"></span> </p>
+            <p>Availability: <span id="productAvailability"></span> </p>
         </div>
     </section>
 
     <section class="productReturnPolicy">
-        <button type="button" class="productReturnToggle">
+        <button type="button" class="productReturnToggle" aria-expanded="false">
             Return Policy
             <span class="toggleIcon">+</span>
         </button>
-        <div class="pruductReturnContent">
+        <div class="productReturnContent" hidden>
+            <p>
 
+                Returns are accepted within 30 days of purchase. Items must be returned in their original condition and packaging.
+
+            </p>
         </div>
     </section>
 </main>
 
+    <script src="../js/shop-product-detail.js"></script>
 </body>
 </html>
